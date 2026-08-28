@@ -23,3 +23,4 @@ func _iniciar_simulacion() -> void:
 func _cerrar_aplicacion() -> void:
 	print("Cerrando aplicación...")
 	get_tree().quit()
+
