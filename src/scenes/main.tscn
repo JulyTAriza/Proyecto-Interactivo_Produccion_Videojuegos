@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://fg7rg8t0effk"]
+
+[ext_resource type="Script" uid="uid://g1bfuqny1f1h" path="res://src/scripts/main.gd" id="1_rr2wm"]
+[ext_resource type="Script" uid="uid://bt1tc4so18bgk" path="res://src/scripts/change_scene.gd" id="2_32aa5"]
+
+[node name="Main" type="Control" unique_id=1512864960]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_rr2wm")
+
+[node name="VBoxMenu" type="VBoxContainer" parent="." unique_id=1331895943]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="BtnSimular" type="Button" parent="VBoxMenu" unique_id=1235232680]
+layout_mode = 2
+text = "Iniciar Simulación"
+
+[node name="BtnSalir" type="Button" parent="VBoxMenu" unique_id=439463410]
+layout_mode = 2
+text = "Cerrar Aplicación"
+
+[node name="LblEstado" type="Label" parent="." unique_id=309952229]
+layout_mode = 0
+offset_top = 67.0
+offset_right = 196.0
+offset_bottom = 97.0
+scale = Vector2(1.0089048, 1.1230944)
+text = "Estado del Sistema: Listo."
+
+[node name="SceneChanger" type="Node" parent="." unique_id=482146943]
+script = ExtResource("2_32aa5")
+
+[connection signal="pressed" from="VBoxMenu/BtnSimular" to="SceneChanger" method="_on_btn_simular_pressed_navigation"]
