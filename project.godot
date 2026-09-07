@@ -10,11 +10,15 @@ config_version=5
 
 [application]
 
-config/name="Mi_proyecto_interactivo"
+config/name="Laboratorio 2"
 config/description="Proyecto de primera clase Universidad Antonio Nariño"
-run/main_scene="uid://fg7rg8t0effk"
+run/main_scene="res://src/core/main_app.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
-config/icon="uid://dakjslfikh14y"
+config/icon="res://src/assets/ui/iconmain.png"
+
+[autoload]
+
+EventBus="*res://src/core/event_bus.gd"
 
 [display]
 

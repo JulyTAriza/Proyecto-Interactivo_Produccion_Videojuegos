@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://8epuoykpq4mr"]
+
+[ext_resource type="Script" uid="uid://c2ebho4383j3d" path="res://src/scenes/simulation/step_1_base.gd" id="1"]
+
+[node name="Step1Base" type="Control" unique_id=1704726005]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+
+[node name="LblTitle" type="Label" parent="." unique_id=506984657]
+layout_mode = 0
+offset_left = 23.0
+offset_top = 30.0
+offset_right = 350.0
+offset_bottom = 53.0
+scale = Vector2(1.16, 2.08)
+text = "Pantalla de Simulación Interactiva - Paso 1"
+
+[node name="GridContainer" type="GridContainer" parent="." unique_id=1696384382]
+layout_mode = 0
+offset_left = 38.0
+offset_top = 90.0
+offset_right = 418.0
+offset_bottom = 181.0
+columns = 2
+
+[node name="BtnIngrediente1" type="Button" parent="GridContainer" unique_id=1998029869]
+layout_mode = 2
+text = "+ Seleccionar Base 1"
+
+[node name="BtnIngrediente2" type="Button" parent="GridContainer" unique_id=246752340]
+layout_mode = 2
+text = "+ Seleccionar Base 2"
+
+[node name="LblStatusLocal" type="Label" parent="." unique_id=17122964]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 141.0
+offset_right = 377.0
+offset_bottom = 164.0
+scale = Vector2(1.12, 1.28)
+text = "Ninguna opción seleccionada de forma local."
+
+[node name="HBoxNavigation" type="HBoxContainer" parent="." unique_id=1660443038]
+layout_mode = 0
+offset_left = 144.0
+offset_top = 186.0
+offset_right = 268.0
+offset_bottom = 226.0
+
+[node name="BtnVolver" type="Button" parent="HBoxNavigation" unique_id=1700523211]
+layout_mode = 2
+text = "Volver al Menú"
