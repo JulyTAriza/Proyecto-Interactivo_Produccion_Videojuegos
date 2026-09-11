@@ -10,8 +10,8 @@ config_version=5
 
 [application]
 
-config/name="Laboratorio 2"
-config/description="Proyecto de primera clase Universidad Antonio Nariño"
+config/name="Detector de Fatiga Cognitiva"
+config/description="Aplicación de autoevaluación psicológica breve para medir el nivel de fatiga cognitiva. Proyecto Universidad Antonio Nariño."
 run/main_scene="res://src/core/main_app.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://src/assets/ui/iconmain.png"
@@ -19,6 +19,7 @@ config/icon="res://src/assets/ui/iconmain.png"
 [autoload]
 
 EventBus="*res://src/core/event_bus.gd"
+GlobalManager="*res://src/core/global_manager.gd"
 
 [display]
 
