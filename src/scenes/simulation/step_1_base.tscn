@@ -1,8 +1,9 @@
-[gd_scene format=3 uid="uid://8epuoykpq4mr"]
+[gd_scene load_steps=3 format=3]
 
-[ext_resource type="Script" uid="uid://c2ebho4383j3d" path="res://src/scenes/simulation/step_1_base.gd" id="1"]
+[ext_resource type="Script" path="res://src/scenes/simulation/step_1_base.gd" id="1"]
+[ext_resource type="PackedScene" path="res://src/components/navigation/button_nav.tscn" id="2"]
 
-[node name="Step1Base" type="Control" unique_id=1704726005]
+[node name="Step1Base" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,47 +12,119 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1")
 
-[node name="LblTitle" type="Label" parent="." unique_id=506984657]
-layout_mode = 0
-offset_left = 23.0
-offset_top = 30.0
-offset_right = 350.0
-offset_bottom = 53.0
-scale = Vector2(1.16, 2.08)
-text = "Pantalla de Simulación Interactiva - Paso 1"
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 24
 
-[node name="GridContainer" type="GridContainer" parent="." unique_id=1696384382]
-layout_mode = 0
-offset_left = 38.0
-offset_top = 90.0
-offset_right = 418.0
-offset_bottom = 181.0
-columns = 2
-
-[node name="BtnIngrediente1" type="Button" parent="GridContainer" unique_id=1998029869]
+[node name="Scroll" type="ScrollContainer" parent="Margin"]
 layout_mode = 2
-text = "+ Seleccionar Base 1"
+horizontal_scroll_mode = 0
 
-[node name="BtnIngrediente2" type="Button" parent="GridContainer" unique_id=246752340]
+[node name="VBoxContainer" type="VBoxContainer" parent="Margin/Scroll"]
 layout_mode = 2
-text = "+ Seleccionar Base 2"
+size_flags_horizontal = 3
+theme_override_constants/separation = 14
 
-[node name="LblStatusLocal" type="Label" parent="." unique_id=17122964]
-layout_mode = 0
-offset_left = 32.0
-offset_top = 141.0
-offset_right = 377.0
-offset_bottom = 164.0
-scale = Vector2(1.12, 1.28)
-text = "Ninguna opción seleccionada de forma local."
-
-[node name="HBoxNavigation" type="HBoxContainer" parent="." unique_id=1660443038]
-layout_mode = 0
-offset_left = 144.0
-offset_top = 186.0
-offset_right = 268.0
-offset_bottom = 226.0
-
-[node name="BtnVolver" type="Button" parent="HBoxNavigation" unique_id=1700523211]
+[node name="LblTitulo" type="Label" parent="Margin/Scroll/VBoxContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "🧠 Evaluación de Fatiga Cognitiva"
+
+[node name="LblInstruccion" type="Label" parent="Margin/Scroll/VBoxContainer"]
+layout_mode = 2
+autowrap_mode = 3
+theme_override_colors/font_color = Color(0.78, 0.8, 0.85, 1)
+text = "1) Elige tu perfil base. 2) Marca los síntomas que presentas (puedes marcar uno varias veces si se repite). El índice total se recalcula automáticamente en GlobalManager."
+
+[node name="HSeparator1" type="HSeparator" parent="Margin/Scroll/VBoxContainer"]
+layout_mode = 2
+
+[node name="LblBase" type="Label" parent="Margin/Scroll/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Perfil Base"
+
+[node name="HBoxBase" type="HBoxContainer" parent="Margin/Scroll/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="BtnEstudiante" type="Button" parent="Margin/Scroll/VBoxContainer/HBoxBase"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Estudiante"
+
+[node name="BtnProfesional" type="Button" parent="Margin/Scroll/VBoxContainer/HBoxBase"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Profesional"
+
+[node name="BtnDeportista" type="Button" parent="Margin/Scroll/VBoxContainer/HBoxBase"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Deportista"
+
+[node name="HSeparator2" type="HSeparator" parent="Margin/Scroll/VBoxContainer"]
+layout_mode = 2
+
+[node name="LblSintomas" type="Label" parent="Margin/Scroll/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Síntomas (cada clic suma un nivel de frecuencia)"
+
+[node name="BtnConcentracion" type="Button" parent="Margin/Scroll/VBoxContainer"]
+layout_mode = 2
+text = "+ Falta de concentración"
+
+[node name="BtnMenteEnBlanco" type="Button" parent="Margin/Scroll/VBoxContainer"]
+layout_mode = 2
+text = "+ Mente en blanco"
+
+[node name="BtnErrores" type="Button" parent="Margin/Scroll/VBoxContainer"]
+layout_mode = 2
+text = "+ Errores por falta de atención"
+
+[node name="BtnCansancio" type="Button" parent="Margin/Scroll/VBoxContainer"]
+layout_mode = 2
+text = "+ Cansancio mental"
+
+[node name="BtnRelectura" type="Button" parent="Margin/Scroll/VBoxContainer"]
+layout_mode = 2
+text = "+ Necesidad de releer"
+
+[node name="HSeparator3" type="HSeparator" parent="Margin/Scroll/VBoxContainer"]
+layout_mode = 2
+
+[node name="LblTotal" type="Label" parent="Margin/Scroll/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+theme_override_colors/font_color = Color(0.36, 0.87, 1.0, 1)
+text = "Índice de Fatiga Total: 0"
+
+[node name="LblPersistencia" type="Label" parent="Margin/Scroll/VBoxContainer"]
+layout_mode = 2
+autowrap_mode = 3
+theme_override_font_sizes/font_size = 13
+theme_override_colors/font_color = Color(0.55, 0.58, 0.63, 1)
+text = "Tu progreso se guarda automáticamente. Puedes cerrar la app y al volver seguirás donde ibas."
+
+[node name="BtnFinalizar" type="Button" parent="Margin/Scroll/VBoxContainer"]
+layout_mode = 2
+text = "✅ Finalizar y Guardar Evaluación"
+
+[node name="HSeparator4" type="HSeparator" parent="Margin/Scroll/VBoxContainer"]
+layout_mode = 2
+
+[node name="BtnVolver" parent="Margin/Scroll/VBoxContainer" instance=ExtResource("2")]
+layout_mode = 2
+size_flags_horizontal = 0
 text = "Volver al Menú"
+target_scene = "res://src/scenes/menu/menu_panel.tscn"
+discard_previous = true

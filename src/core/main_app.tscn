@@ -1,8 +1,8 @@
-[gd_scene format=3 uid="uid://b8h7dakmvwwc3"]
+[gd_scene format=3 uid="uid://dvh46ua8x8mjh"]
 
-[ext_resource type="Script" uid="uid://bkphcnp1oxo6e" path="res://src/core/main_app.gd" id="1"]
+[ext_resource type="Script" uid="uid://b1tjiyjpdoskr" path="res://src/core/main_app.gd" id="1"]
 
-[node name="MainApp" type="Control" unique_id=164674918]
+[node name="MainApp" type="Control" unique_id=809820893]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,7 +11,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1")
 
-[node name="SceneContainer" type="Control" parent="." unique_id=85715133]
+[node name="SceneContainer" type="Control" parent="." unique_id=517770944]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
