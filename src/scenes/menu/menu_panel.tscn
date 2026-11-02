@@ -122,8 +122,19 @@ target_scene = "res://src/scenes/minigame/focus_rush.tscn"
 icon = ExtResource("ico_play")
 alignment = 0
 focus_neighbor_top = NodePath("../BtnCupones")
-focus_neighbor_bottom = NodePath("../BtnTienda")
+focus_neighbor_bottom = NodePath("../BtnMinijuegos")
 focus_neighbor_left = NodePath("../../VBoxEvaluacion/BtnSimular")
+focus_neighbor_right = NodePath("../../VBoxOtros/BtnConfig")
+
+[node name="BtnMinijuegos" parent="Margin/VBoxRoot/HBoxSecciones/VBoxJuego" instance=ExtResource("2")]
+layout_mode = 2
+text = "Más minijuegos (cupones)"
+target_scene = "res://src/scenes/gamification/game_hub.tscn"
+icon = ExtResource("ico_play")
+alignment = 0
+focus_neighbor_top = NodePath("../BtnJugar")
+focus_neighbor_bottom = NodePath("../BtnTienda")
+focus_neighbor_left = NodePath("../../VBoxEvaluacion/BtnHistorial")
 focus_neighbor_right = NodePath("../../VBoxOtros/BtnConfig")
 
 [node name="BtnTienda" parent="Margin/VBoxRoot/HBoxSecciones/VBoxJuego" instance=ExtResource("2")]
@@ -132,7 +143,7 @@ text = "Tienda de Bienestar"
 target_scene = "res://src/scenes/shop/buy_panel.tscn"
 icon = ExtResource("ico_shop")
 alignment = 0
-focus_neighbor_top = NodePath("../BtnJugar")
+focus_neighbor_top = NodePath("../BtnMinijuegos")
 focus_neighbor_bottom = NodePath("../BtnKit")
 focus_neighbor_left = NodePath("../../VBoxEvaluacion/BtnHistorial")
 focus_neighbor_right = NodePath("../../VBoxOtros/BtnCreditos")

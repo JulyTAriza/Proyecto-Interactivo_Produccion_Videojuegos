@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://src/scenes/gamification/infusion_rush/cup_spawn.gd" id="1"]
+[ext_resource type="Texture2D" path="res://src/scenes/gamification/infusion_rush/assets/mesa.svg" id="2"]
+[ext_resource type="PackedScene" path="res://src/scenes/gamification/infusion_rush/cup.tscn" id="3"]
+
+[sub_resource type="RectangleShape2D" id="forma_mesa"]
+size = Vector2(200, 18)
+
+[node name="CupSpawn" type="Node2D" groups=["cup_spawn"]]
+script = ExtResource("1")
+cup_scene = ExtResource("3")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 21)
+texture = ExtResource("2")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0, 0)
+shape = SubResource("forma_mesa")

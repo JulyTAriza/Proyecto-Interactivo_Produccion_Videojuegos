@@ -1,0 +1,235 @@
+[gd_scene load_steps=20 format=3]
+
+[ext_resource type="Script" path="res://src/scenes/gamification/catch_energy/catch_energy.gd" id="1"]
+[ext_resource type="Script" path="res://src/scenes/gamification/catch_energy/player.gd" id="2"]
+[ext_resource type="PackedScene" path="res://src/scenes/gamification/catch_energy/spawner.tscn" id="3"]
+[ext_resource type="Texture2D" path="res://src/scenes/gamification/catch_energy/assets/jugador_canasta.svg" id="4"]
+[ext_resource type="Texture2D" path="res://src/scenes/gamification/catch_energy/assets/zona_recoleccion.svg" id="5"]
+[ext_resource type="Texture2D" path="res://src/scenes/gamification/catch_energy/assets/bloque_piedra.svg" id="6"]
+[ext_resource type="Texture2D" path="res://src/scenes/gamification/catch_energy/assets/pared_embudo.svg" id="7"]
+[ext_resource type="PackedScene" path="res://src/components/navigation/button_nav.tscn" id="8"]
+[ext_resource type="Theme" path="res://src/assets/ui/ui_theme.tres" id="9"]
+[ext_resource type="Texture2D" path="res://src/assets/icons/icon_back.svg" id="10"]
+
+[sub_resource type="RectangleShape2D" id="forma_jugador"]
+size = Vector2(120, 40)
+
+[sub_resource type="RectangleShape2D" id="forma_recoleccion"]
+size = Vector2(124, 30)
+
+[sub_resource type="RectangleShape2D" id="forma_suelo"]
+size = Vector2(1280, 32)
+
+[sub_resource type="RectangleShape2D" id="forma_pared_inclinada"]
+size = Vector2(24, 230)
+
+[sub_resource type="RectangleShape2D" id="forma_pared_vertical"]
+size = Vector2(24, 252)
+
+[node name="CatchEnergy" type="Node2D"]
+script = ExtResource("1")
+
+[node name="Fondo" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="ColorFondo" type="ColorRect" parent="Fondo"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.043, 0.063, 0.125, 1)
+
+[node name="Suelo" type="StaticBody2D" parent="." groups=["floor"]]
+position = Vector2(576, 624)
+
+[node name="Sprite2D" type="Sprite2D" parent="Suelo"]
+scale = Vector2(20, 0.5)
+texture = ExtResource("6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Suelo"]
+shape = SubResource("forma_suelo")
+
+[node name="Embudo" type="StaticBody2D" parent="."]
+
+[node name="ParedInclinadaIzq" type="CollisionShape2D" parent="Embudo"]
+position = Vector2(118, 255)
+rotation = -0.5
+shape = SubResource("forma_pared_inclinada")
+
+[node name="ParedInclinadaDer" type="CollisionShape2D" parent="Embudo"]
+position = Vector2(1034, 255)
+rotation = 0.5
+shape = SubResource("forma_pared_inclinada")
+
+[node name="ParedVerticalIzq" type="CollisionShape2D" parent="Embudo"]
+position = Vector2(170, 482)
+shape = SubResource("forma_pared_vertical")
+
+[node name="ParedVerticalDer" type="CollisionShape2D" parent="Embudo"]
+position = Vector2(982, 482)
+shape = SubResource("forma_pared_vertical")
+
+[node name="SpriteInclinadaIzq" type="Sprite2D" parent="Embudo"]
+position = Vector2(118, 255)
+rotation = -0.5
+scale = Vector2(0.375, 3.6)
+texture = ExtResource("7")
+
+[node name="SpriteInclinadaDer" type="Sprite2D" parent="Embudo"]
+position = Vector2(1034, 255)
+rotation = 0.5
+scale = Vector2(0.375, 3.6)
+texture = ExtResource("7")
+
+[node name="SpriteVerticalIzq" type="Sprite2D" parent="Embudo"]
+position = Vector2(170, 482)
+scale = Vector2(0.375, 3.94)
+texture = ExtResource("7")
+
+[node name="SpriteVerticalDer" type="Sprite2D" parent="Embudo"]
+position = Vector2(982, 482)
+scale = Vector2(0.375, 3.94)
+texture = ExtResource("7")
+
+[node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(576, 580)
+script = ExtResource("2")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+scale = Vector2(0.95, 0.85)
+texture = ExtResource("4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+shape = SubResource("forma_jugador")
+
+[node name="AreaRecolect" type="Area2D" parent="Player"]
+position = Vector2(0, -36)
+
+[node name="Sprite2D" type="Sprite2D" parent="Player/AreaRecolect"]
+texture = ExtResource("5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/AreaRecolect"]
+shape = SubResource("forma_recoleccion")
+
+[node name="SpawnerCentro" parent="." instance=ExtResource("3")]
+position = Vector2(576, 70)
+max_active_items = 3
+spawn_interval = 1.6
+
+[node name="SpawnerIzq" parent="." instance=ExtResource("3")]
+position = Vector2(400, 90)
+max_active_items = 2
+spawn_interval = 2.3
+
+[node name="SpawnerDer" parent="." instance=ExtResource("3")]
+position = Vector2(752, 90)
+max_active_items = 2
+spawn_interval = 2.7
+
+[node name="SpawnerParabolaIzq" parent="." instance=ExtResource("3")]
+position = Vector2(260, 160)
+max_active_items = 1
+spawn_interval = 3.4
+use_parabola = true
+
+[node name="SpawnerParabolaDer" parent="." instance=ExtResource("3")]
+position = Vector2(892, 160)
+max_active_items = 1
+spawn_interval = 3.9
+use_parabola = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="UI" type="Control" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("9")
+
+[node name="HUD" type="VBoxContainer" parent="CanvasLayer/UI"]
+layout_mode = 1
+offset_left = 24.0
+offset_top = 16.0
+offset_right = 520.0
+offset_bottom = 120.0
+mouse_filter = 2
+
+[node name="Titulo" type="Label" parent="CanvasLayer/UI/HUD"]
+layout_mode = 2
+theme_type_variation = &"TituloLabel"
+text = "Atrapa la Energía"
+
+[node name="Objective" type="Label" parent="CanvasLayer/UI/HUD"]
+layout_mode = 2
+text = "Energía recolectada: 0 / 8"
+
+[node name="LblIntentos" type="Label" parent="CanvasLayer/UI/HUD"]
+layout_mode = 2
+theme_type_variation = &"SecundarioLabel"
+text = "Intentos restantes en la sesión: 3"
+
+[node name="LblAyuda" type="Label" parent="CanvasLayer/UI/HUD"]
+layout_mode = 2
+theme_type_variation = &"SecundarioLabel"
+text = "Muévete con A/D o con las flechas. Si una energía toca el suelo, se pierde."
+
+[node name="BtnSalir" parent="CanvasLayer/UI" instance=ExtResource("8")]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -230.0
+offset_top = 16.0
+offset_right = -24.0
+offset_bottom = 60.0
+grow_horizontal = 0
+text = "Salir del juego"
+icon = ExtResource("10")
+target_scene = "res://src/scenes/gamification/game_hub.tscn"
+discard_previous = true
+
+[node name="ResultPanel" type="PanelContainer" parent="CanvasLayer/UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -260.0
+offset_top = -110.0
+offset_right = 260.0
+offset_bottom = 110.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Margin" type="MarginContainer" parent="CanvasLayer/UI/ResultPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 20
+
+[node name="VBox" type="VBoxContainer" parent="CanvasLayer/UI/ResultPanel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="ResultLabel" type="Label" parent="CanvasLayer/UI/ResultPanel/Margin/VBox"]
+layout_mode = 2
+text = "Resultado"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="BtnVolverJuegos" parent="CanvasLayer/UI/ResultPanel/Margin/VBox" instance=ExtResource("8")]
+layout_mode = 2
+text = "Volver a los minijuegos"
+icon = ExtResource("10")
+target_scene = "res://src/scenes/gamification/game_hub.tscn"
+discard_previous = true
+
+[connection signal="collected_food" from="Player" to="." method="_on_player_collected_food"]

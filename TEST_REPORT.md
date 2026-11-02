@@ -8,7 +8,9 @@
 | Unitarias (GdUnit4) | 23 | 23 PASA |
 | Integración (GdUnit4, Autoloads reales y `scene_runner`) | 6 | 6 PASA |
 | Sistema (proyecto completo, 6 ejecuciones del proceso) | 1 escenario (SIS-01) | PASA |
-| **Total automatizado GdUnit4** | **29** | **29 PASA, 0 fallas** |
+| **Total automatizado GdUnit4 (Beta)** | **29** | **29 PASA, 0 fallas** |
+| Entrega final: minijuegos de los Labs 5 y 6 (`test_catch_energy_scene.gd`, `test_cup_fsm.gd`) | 9 | 9 PASA |
+| **Total automatizado en la entrega final** | **38** | **38 PASA, 0 fallas** |
 
 Comandos:
 ```bash

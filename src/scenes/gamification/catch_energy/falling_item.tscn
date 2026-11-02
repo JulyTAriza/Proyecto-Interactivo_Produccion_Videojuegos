@@ -1,0 +1,30 @@
+[gd_scene load_steps=12 format=3]
+
+[ext_resource type="Script" path="res://src/scenes/gamification/catch_energy/falling_item.gd" id="1"]
+[ext_resource type="Texture2D" path="res://src/assets/items/item_agua.svg" id="t1"]
+[ext_resource type="Texture2D" path="res://src/assets/items/item_fruta.svg" id="t2"]
+[ext_resource type="Texture2D" path="res://src/assets/items/item_te.svg" id="t3"]
+[ext_resource type="Texture2D" path="res://src/assets/items/item_frutos_secos.svg" id="t4"]
+[ext_resource type="Texture2D" path="res://src/assets/items/item_jugo.svg" id="t5"]
+[ext_resource type="Texture2D" path="res://src/assets/items/item_barra.svg" id="t6"]
+
+[sub_resource type="PhysicsMaterial" id="mat_rebote"]
+friction = 0.4
+bounce = 0.45
+
+[sub_resource type="CircleShape2D" id="forma"]
+radius = 26.0
+
+[node name="FallingItem" type="RigidBody2D" groups=["collectable"]]
+physics_material_override = SubResource("mat_rebote")
+contact_monitor = true
+max_contacts_reported = 4
+script = ExtResource("1")
+texturas = Array[Texture2D]([ExtResource("t1"), ExtResource("t2"), ExtResource("t3"), ExtResource("t4"), ExtResource("t5"), ExtResource("t6")])
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.85, 0.85)
+texture = ExtResource("t1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("forma")

@@ -12,7 +12,11 @@ Este repositorio aloja **Detector de Fatiga Cognitiva**, una aplicación interac
 2. **Tienda de Bienestar**: compra un plan de descanso; la factura aplica tu mejor cupón.
 3. **Arma tu Kit Anti-Fatiga**: elige bebida, snack y actividad de un catálogo generado desde
    `Resource`; la factura del kit también acepta cupones.
-4. Los cupones y las compras se guardan en `user://save_data.json` (IndexedDB en la versión Web).
+4. **Más minijuegos** (menú → "Más minijuegos"): **Atrapa la Energía** (físicas 2D: mueve la canasta
+   con A/D o flechas y recoge 8 recursos que caen y rebotan) e **Infusión Rush** (clic para calentar
+   la taza, arrástrala a una estación, espera la infusión y llévala a la bandeja; 4 entregas en 90 s).
+   Cada uno permite 3 intentos por sesión.
+5. Los cupones y las compras se guardan en `user://save_data.json` (IndexedDB en la versión Web).
 
 ## 📂 Estructura de Directorios del Repositorio
 ```
@@ -24,6 +28,7 @@ src/
 │   ├── simulation/  Evaluación de fatiga (FSM, Lab 6)
 │   ├── history/     Historial persistente de evaluaciones
 │   ├── minigame/    Enfoque Rush: focus_rush.tscn, focus_play_area.gd, focus_rush_rules.gd  (Lab 7)
+│   ├── gamification/ game_hub.tscn · catch_energy/ (Lab 5: físicas) · infusion_rush/ (Lab 6: FSM)
 │   ├── coupon/      coupon_event.tscn: cupón obtenido / mis cupones  (Lab 7)
 │   ├── shop/        buy_panel, purchase_invoice (Lab 7-8) · *_interactive (Lab 9)
 │   ├── config/  credits/
@@ -31,7 +36,7 @@ src/
 └── assets/          ui/ui_theme.tres (Lab 8), fonts/, icons/, items/
 tests/               Suites GdUnit4 (Lab 10)
 tools/               Prueba de sistema, sesión de depuración, contraste WCAG, scripts de GitHub
-doc/                 ADR-001..005, ACCESIBILIDAD.md, PUBLICACION_ITCH.md, qa/ (issues y evidencias)
+doc/                 ADR-001..008, ACCESIBILIDAD.md, PUBLICACION_ITCH.md, qa/ (issues y evidencias)
 ```
 
 ## 📚 Laboratorios publicados
@@ -43,11 +48,12 @@ Cada laboratorio está en su propia rama y tiene una etiqueta con su versión fi
 |---|---|---|---|
 | 2 · Escenas, nodos y co-localización | [`lab-2`](https://github.com/JulyTAriza/Proyecto-Interactivo_Produccion_Videojuegos/tree/lab-2) | [`lab-2-v1.0`](https://github.com/JulyTAriza/Proyecto-Interactivo_Produccion_Videojuegos/releases/tag/lab-2-v1.0) | README.md, ADR-001 |
 | 3-4 · Event Bus, GlobalManager y ButtonNav | [`main` (Lab 4)](https://github.com/JulyTAriza/Proyecto-Interactivo_Produccion_Videojuegos/tree/lab-4-final) | [`lab-4-final`](https://github.com/JulyTAriza/Proyecto-Interactivo_Produccion_Videojuegos/releases/tag/lab-4-final) | ADR-002, ADR-003, ADR-004 |
-| 5-6 · Entrada del usuario, FSM y animaciones | [`lab-6`](https://github.com/JulyTAriza/Proyecto-Interactivo_Produccion_Videojuegos/tree/lab-6) | [`lab-6-final`](https://github.com/JulyTAriza/Proyecto-Interactivo_Produccion_Videojuegos/releases/tag/lab-6-final) | ADR-005, `doc/diagrams/fsm-evaluacion.md` |
+| 5-6 · Entrada del usuario, físicas, FSM y animaciones (minijuegos de físicas y de FSM completos en `main`) | [`lab-6`](https://github.com/JulyTAriza/Proyecto-Interactivo_Produccion_Videojuegos/tree/lab-6) | [`lab-6-final`](https://github.com/JulyTAriza/Proyecto-Interactivo_Produccion_Videojuegos/releases/tag/lab-6-final) | ADR-005, `doc/diagrams/fsm-evaluacion.md` |
 | 7 · Vertical Slice, persistencia y Web | [`lab-7`](https://github.com/JulyTAriza/Proyecto-Interactivo_Produccion_Videojuegos/tree/lab-7) | [`lab-7-final`](https://github.com/JulyTAriza/Proyecto-Interactivo_Produccion_Videojuegos/releases/tag/lab-7-final) | DEVLOG.md, `doc/PUBLICACION_ITCH.md` |
 | 8 · UI/UX y accesibilidad | [`lab-8`](https://github.com/JulyTAriza/Proyecto-Interactivo_Produccion_Videojuegos/tree/lab-8) | [`lab-8-final`](https://github.com/JulyTAriza/Proyecto-Interactivo_Produccion_Videojuegos/releases/tag/lab-8-final) | USER_FEEDBACK.md, BACKLOG.md, `doc/ACCESIBILIDAD.md` |
 | 9 · Resources y UI dinámica | [`lab-9`](https://github.com/JulyTAriza/Proyecto-Interactivo_Produccion_Videojuegos/tree/lab-9) | [`lab-9-final`](https://github.com/JulyTAriza/Proyecto-Interactivo_Produccion_Videojuegos/releases/tag/lab-9-final) | ADR-006.md |
 | 10 · Depuración, pruebas y QA | [`lab-10`](https://github.com/JulyTAriza/Proyecto-Interactivo_Produccion_Videojuegos/tree/lab-10) | [`lab-10-final`](https://github.com/JulyTAriza/Proyecto-Interactivo_Produccion_Videojuegos/releases/tag/lab-10-final) · [`v0.9.0-beta`](https://github.com/JulyTAriza/Proyecto-Interactivo_Produccion_Videojuegos/releases/tag/v0.9.0-beta) | registro_depuracion.md, TEST_REPORT.md, `doc/qa/ISSUES.md` |
+| **Entrega final (guías 1 a 10 integradas)** | [`main`](https://github.com/JulyTAriza/Proyecto-Interactivo_Produccion_Videojuegos/tree/main) | — | ADR-007, ADR-008, `docs/adr/adr_001_escenas.md` |
 
 Para descargar un laboratorio concreto:
 ```bash
@@ -59,7 +65,7 @@ git switch lab-9        # o lab-6, lab-7, lab-8, lab-10
 ## 🧪 Pruebas
 ```bash
 export GODOT_BIN=/ruta/a/godot
-addons/gdUnit4/runtest.sh --headless --ignoreHeadlessMode -a res://tests   # 29 pruebas GdUnit4
+addons/gdUnit4/runtest.sh --headless --ignoreHeadlessMode -a res://tests   # 38 pruebas GdUnit4
 tools/run_system_test.sh                                                    # prueba de sistema SIS-01
 python3 tools/contrast_check.py                                             # contraste WCAG del Theme
 ```

@@ -3,6 +3,21 @@
 Todas las novedades notables de este proyecto se documentan en este
 archivo. El formato está inspirado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/).
 
+## [1.6.0] - 2026-11-02 — Entrega final: Laboratorios 5 y 6 completos
+
+### Added (Añadido)
+- Minijuego de físicas **Atrapa la Energía** (Lab 5): CharacterBody2D, RigidBody2D, StaticBody2D,
+  Area2D, spawners con Timer, HUD en CanvasLayer y cupón de $2.500 (mínimo $12.000).
+- Minijuego **Infusión Rush** (Lab 6): FSM por taza, arrastre con la acción `interact`, Tween por
+  transición, temporizador general y cupón de $4.000 (mínimo $18.000).
+- Pantalla "Participa y gana cupones" (`game_hub.tscn`) y botón "Más minijuegos" en el menú.
+- Límite de 3 intentos por sesión y por minijuego (`GlobalManager.registrar_intento`).
+- `GlobalManager.crear_cupon()` y acción `interact` en el Input Map.
+- ADR-007, ADR-008, `docs/adr/adr_001_escenas.md` y 9 pruebas GdUnit4.
+
+### Changed (Cambiado)
+- `MainApp` ignora el mouse y `SceneContainer` lo deja pasar, para el picking de físicas 2D.
+
 ## [1.5.0] - 2026-11-02 — Laboratorio 10: QA · publicada como Release `v0.9.0-beta`
 
 ### Added

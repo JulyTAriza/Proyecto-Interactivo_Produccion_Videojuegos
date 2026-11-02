@@ -495,3 +495,37 @@ Versión Beta estable: 29 pruebas automatizadas en verde, flujo completo validad
    notifique a otros suscriptores.
 4. **Aporte de GitHub Issues:** cada defecto quedó con pasos, causa, solución y prueba de regresión, lo
    que permitió cerrar la Beta sabiendo qué se corrigió y qué queda pendiente.
+
+## [2026-11-02] - Laboratorios 5 y 6 (completados en la entrega final): físicas, FSM por instancia y Tweens
+
+### Actividades Realizadas
+* Revisión de cobertura guía por guía antes de la entrega final: los conceptos de físicas 2D del
+  Laboratorio 5 y la FSM por objeto con arrastre del Laboratorio 6 no estaban implementados como
+  pedían las guías (Enfoque Rush se dibuja con `_draw()` y la FSM existente era la de la evaluación).
+* **Lab 5 — Atrapa la Energía** (`src/scenes/gamification/catch_energy/`): `CharacterBody2D` con
+  acciones del Input Map, `RigidBody2D` con `PhysicsMaterial` y `contact_monitor`, `StaticBody2D`
+  (suelo y embudo), `Area2D` de recolección, `Spawner` con `Timer` y grupos, HUD en `CanvasLayer`,
+  cupón por `EventBus.coupon_obtained` y límite de 3 intentos por sesión (reto 1).
+* **Lab 6 — Infusión Rush** (`src/scenes/gamification/infusion_rush/`): FSM por taza
+  (`FRIA → DISPONIBLE → ARRASTRANDO → INFUSIONANDO → LISTA → ENTREGADA`), acción `interact`,
+  estaciones y zona de entrega en grupos, temporizador general, panel de resultado, Tween por
+  transición y cupón al ganar.
+* Nueva pantalla `game_hub.tscn` ("Participa y gana cupones") y botón "Más minijuegos" en el menú.
+* `MainApp` con `mouse_filter = IGNORE` y `SceneContainer` con `PASS` para el *picking* de físicas.
+* ADR-007, ADR-008 y `docs/adr/adr_001_escenas.md`.
+* 9 pruebas nuevas en GdUnit4 (`test_catch_energy_scene.gd`, `test_cup_fsm.gd`).
+
+### Desafíos y Soluciones
+* *Desafío:* las tazas no recibían `mouse_entered` dentro de la aplicación.
+* *Solución:* el `Control` raíz de `MainApp` consumía el clic; se cambió su `mouse_filter` y se
+  verificó con eventos de mouse reales que una taza pasa de `FRIA` a `INFUSIONANDO`.
+* *Desafío:* en modo sin pantalla no hay puntero, y la taza en `ARRASTRANDO` sigue al mouse.
+* *Solución:* en las pruebas se pausa su `_physics_process` (`bloqueada`) mientras el motor
+  actualiza los solapamientos, y luego se llama a `release_cup()`.
+
+### Decisiones de diseño
+* Los minijuegos solo emiten `coupon_obtained`; ninguno conoce la tienda (ADR-007).
+* Los intentos de la sesión viven en `GlobalManager`; la factura no conoce esa regla.
+
+### Estado Final
+Las 10 guías quedan implementadas en la rama `main`; 38 pruebas automatizadas en verde.

@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://src/scenes/gamification/catch_energy/spawner.gd" id="1"]
+[ext_resource type="PackedScene" path="res://src/scenes/gamification/catch_energy/falling_item.tscn" id="2"]
+
+[node name="Spawner" type="Node2D" groups=["spawner"]]
+script = ExtResource("1")
+collectable_scene = ExtResource("2")
+
+[node name="Timer" type="Timer" parent="."]

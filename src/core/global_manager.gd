@@ -477,3 +477,40 @@ func get_kit_items() -> Array[WellnessItemData]:
 
 func clear_kit() -> void:
 	_on_kit_slot_cleared("")
+
+# ===========================================================================
+# LABORATORIOS 5 Y 6 — PROMOCIÓN GAMIFICADA (intentos y fábrica de cupones)
+# ===========================================================================
+# Reto 1 del Laboratorio 5: "se permiten hasta tres intentos de
+# participación durante la sesión". El estado de los intentos vive aquí
+# (estado global) y NO en la factura ni en el minijuego: el minijuego solo
+# pregunta si puede iniciar y la factura no necesita conocer esta regla.
+# Los intentos no se guardan en disco: se reinician en cada sesión.
+
+const MAX_INTENTOS_SESION: int = 3
+
+## juego_id -> intentos usados en la sesión actual.
+var intentos_sesion: Dictionary = {}
+
+func intentos_restantes(juego_id: String) -> int:
+	return maxi(MAX_INTENTOS_SESION - int(intentos_sesion.get(juego_id, 0)), 0)
+
+## Consume un intento. Devuelve false si ya no quedan intentos.
+func registrar_intento(juego_id: String) -> bool:
+	if intentos_restantes(juego_id) <= 0:
+		return false
+	intentos_sesion[juego_id] = int(intentos_sesion.get(juego_id, 0)) + 1
+	return true
+
+## Construye un cupón con el mismo formato que usan todas las fuentes de
+## recompensa (Enfoque Rush, Atrapa la Energía, Infusión Rush). Así la
+## tienda y la persistencia no distinguen de qué minijuego proviene.
+static func crear_cupon(valor: int, minimo: int, prefijo: String, origen: String) -> Dictionary:
+	return {
+		"id": "CUP-%d-%04d" % [int(Time.get_unix_time_from_system()), randi() % 10000],
+		"code": "%s-%d" % [prefijo, valor],
+		"value": valor,
+		"minimum_purchase": minimo,
+		"origin": origen,
+		"obtained_at": Time.get_datetime_string_from_system(),
+	}
