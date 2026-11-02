@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="WellnessItemData" format=3]
+
+[ext_resource type="Script" path="res://src/data/wellness_item_data.gd" id="1_xll81"]
+[ext_resource type="Texture2D" path="res://src/assets/items/item_pausa_activa.svg" id="2_n4oox"]
+
+[resource]
+script = ExtResource("1_xll81")
+id = "pausa_activa"
+display_name = "Pausa activa guiada"
+description = "5 minutos de estiramientos dirigidos."
+category = "actividad"
+texture = ExtResource("2_n4oox")
+price = 8000
+relief = 6

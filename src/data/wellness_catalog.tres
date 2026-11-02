@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="WellnessDatabase" format=3]
+
+[ext_resource type="Script" path="res://src/data/wellness_item_data.gd" id="1_lq35h"]
+[ext_resource type="Resource" path="res://src/data/items/agua.tres" id="2_xiiwx"]
+[ext_resource type="Resource" path="res://src/data/items/te.tres" id="3_tlgb3"]
+[ext_resource type="Resource" path="res://src/data/items/jugo.tres" id="4_ytrmu"]
+[ext_resource type="Resource" path="res://src/data/items/frutos_secos.tres" id="5_755ka"]
+[ext_resource type="Resource" path="res://src/data/items/fruta.tres" id="6_hl7tt"]
+[ext_resource type="Resource" path="res://src/data/items/barra.tres" id="7_ticyb"]
+[ext_resource type="Resource" path="res://src/data/items/pausa_activa.tres" id="8_hhrdq"]
+[ext_resource type="Resource" path="res://src/data/items/mindfulness.tres" id="9_ga165"]
+[ext_resource type="Resource" path="res://src/data/items/siesta.tres" id="10_ccudx"]
+[ext_resource type="Script" path="res://src/data/wellness_database.gd" id="11_tsbed"]
+
+[resource]
+script = ExtResource("11_tsbed")
+items = Array[ExtResource("1_lq35h")]([ExtResource("2_xiiwx"), ExtResource("3_tlgb3"), ExtResource("4_ytrmu"), ExtResource("5_755ka"), ExtResource("6_hl7tt"), ExtResource("7_ticyb"), ExtResource("8_hhrdq"), ExtResource("9_ga165"), ExtResource("10_ccudx")])

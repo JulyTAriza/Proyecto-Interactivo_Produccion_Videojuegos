@@ -26,10 +26,12 @@ const Kind = FocusRushRules.StimulusKind
 
 var app: Node
 var errores: Array[String] = []
+var args_tienda: String = "planes"
 
 func _ready() -> void:
 	var args: Dictionary = _args()
 	var fase: String = args.get("fase", "jugar")
+	args_tienda = args.get("tienda", "planes")
 	app = MAIN_APP.instantiate()
 	add_child(app)
 	await _frames(5)
@@ -78,6 +80,12 @@ func _jugar(comprar: bool) -> void:
 		_log("RESULTADO_CUPONES=%d" % GlobalManager.coupons.size())
 		return
 
+	if args_tienda == "kit":
+		_presionar(juego.btn_primario)
+		await _frames(5)
+		await _comprar_kit(cupones_iniciales)
+		return
+
 	# 3) Victoria -> Ver mi cupón -> Tienda
 	_presionar(juego.btn_primario)
 	await _frames(5)
@@ -110,6 +118,47 @@ func _jugar(comprar: bool) -> void:
 		_presionar(factura.btn_continuar)
 		await _frames(5)
 		_check(_escena_actual().name == "MenuPanel", "Continuar regresa al menú principal")
+	_log("RESULTADO_CUPONES=%d" % GlobalManager.coupons.size())
+
+## Lab 9: Cupón -> Menú -> Kit Anti-Fatiga (UI auto-poblada) -> factura interactiva.
+func _comprar_kit(cupones_iniciales: int) -> void:
+	_presionar(_buscar("BtnVolver"))
+	await _frames(5)
+	_presionar(_buscar("BtnKit"))
+	await _frames(5)
+	var panel: Node = _escena_actual()
+	_check(panel.name == "BuyPanelInteractive", "Se abrió el armador de kit")
+	_check(panel.tarjetas.size() == GlobalManager.wellness_items.size(), "Se generó una tarjeta por recurso del catálogo (%d)" % panel.tarjetas.size())
+	for id in ["jugo", "frutos_secos", "mindfulness"]:
+		_presionar(panel.tarjetas[id])
+		await _frames(3)
+	var esperado: int = 5500 + 6000 + 12000
+	_check(GlobalManager.calculate_kit_subtotal(GlobalManager.kit_selection) == esperado, "Subtotal del kit = $23.500")
+	_presionar(panel.tarjetas["te"])  # reemplaza la bebida
+	await _frames(3)
+	esperado = 4500 + 6000 + 12000
+	_check(GlobalManager.kit_selection["bebida"] == "te", "Elegir otra bebida reemplaza la sección")
+	await _frames(30)
+	_check(panel.lbl_subtotal.text == "Subtotal: $" + FormatUtil.pesos(esperado), "La UI muestra el subtotal recalculado (%s)" % panel.lbl_subtotal.text)
+	var slot_snack: Dictionary = panel.composicion.slots["snack"]
+	_presionar(slot_snack["quitar"])
+	await _frames(3)
+	_check(GlobalManager.kit_selection["snack"] == "", "Quitar vacía la sección snack")
+	_presionar(panel.tarjetas["frutos_secos"])
+	await _frames(3)
+	_presionar(panel.btn_factura)
+	await _frames(5)
+	var factura: Node = _escena_actual()
+	_check(factura.name == "PurchaseInvoiceInteractive", "Se abrió la factura interactiva")
+	_check(factura.items_factura.size() == 3, "La factura tiene 3 líneas generadas desde recursos")
+	var cupon: Dictionary = GlobalManager.get_best_coupon(esperado)
+	var total: int = esperado - int(cupon.get("value", 0))
+	_check(factura.lbl_total.text == "$" + FormatUtil.pesos(total), "Total de la factura %s == $%s" % [factura.lbl_total.text, FormatUtil.pesos(total)])
+	_presionar(factura.btn_confirmar)
+	await _frames(5)
+	_check(factura.pop_up_confirm.visible, "PurchaseSuccessPopup visible tras confirmar el kit")
+	_check(GlobalManager.coupons.size() == cupones_iniciales + 1 - (0 if cupon.is_empty() else 1), "El cupón aplicado al kit se consumió")
+	_check(GlobalManager.calculate_kit_subtotal(GlobalManager.kit_selection) == 0, "El kit se vació después de comprar")
 	_log("RESULTADO_CUPONES=%d" % GlobalManager.coupons.size())
 
 func _verificar(esperados: int) -> void:

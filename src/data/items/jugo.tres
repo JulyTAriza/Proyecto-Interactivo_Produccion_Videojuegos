@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="WellnessItemData" format=3]
+
+[ext_resource type="Script" path="res://src/data/wellness_item_data.gd" id="1_hlkfi"]
+[ext_resource type="Texture2D" path="res://src/assets/items/item_jugo.svg" id="2_b5tak"]
+
+[resource]
+script = ExtResource("1_hlkfi")
+id = "jugo"
+display_name = "Jugo natural"
+description = "Energía de la fruta sin exceso de azúcar."
+texture = ExtResource("2_b5tak")
+price = 5500
+relief = 3

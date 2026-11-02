@@ -48,6 +48,10 @@ const SAVE_PATH_HISTORIAL: String = "user://fatiga_historial.json"
 ## (Ruta exigida por la guía: user://save_data.json).
 const SAVE_PATH: String = "user://save_data.json"
 
+## Laboratorio 9 — Catálogo oficial de bienestar basado en Resources.
+## Para ampliar la tienda basta con agregar recursos .tres al catálogo.
+const WELLNESS_DB: WellnessDatabase = preload("res://src/data/wellness_catalog.tres")
+
 ## Planes de descanso que vende la Tienda de Bienestar (BuyPanel, Lab 7).
 ## Precios en pesos colombianos (COP).
 const PLANES_DESCANSO: Dictionary = {
@@ -92,6 +96,13 @@ var purchases: Array = []
 ## Último cupón obtenido (lo muestra la escena CouponEvent).
 var last_coupon: Dictionary = {}
 
+## Acceso global y limpio al catálogo (equivalente a GlobalManager.ingredients
+## de la guía): la UI auto-poblada recorre este arreglo.
+var wellness_items: Array[WellnessItemData] = WELLNESS_DB.items
+
+## Composición actual del Kit Anti-Fatiga: sección -> id del recurso ("" = vacía).
+var kit_selection: Dictionary = {"bebida": "", "snack": "", "actividad": ""}
+
 ## Compra en curso en la Tienda de planes (BuyPanel -> PurchaseInvoice).
 var compra_actual: Dictionary = {"plan_id": "", "subtotal": 0}
 
@@ -109,6 +120,9 @@ func _ready() -> void:
 	EventBus.coupon_obtained.connect(_on_coupon_obtained)
 	EventBus.coupons_requested.connect(_on_coupons_requested)
 	EventBus.plan_selected.connect(_on_plan_selected)
+	EventBus.kit_item_selected.connect(_on_kit_item_selected)
+	EventBus.kit_slot_cleared.connect(_on_kit_slot_cleared)
+	EventBus.kit_requested.connect(_on_kit_requested)
 
 	# Notifica de inmediato el total restaurado (si lo había) para que la
 	# UI, cuando se conecte, pueda pedirlo explícitamente vía
@@ -391,3 +405,63 @@ func _on_plan_selected(plan_id: String) -> void:
 func clear_purchase() -> void:
 	compra_actual = {"plan_id": "", "subtotal": 0}
 	EventBus.purchase_updated.emit(compra_actual)
+
+# ===========================================================================
+# LABORATORIO 9 — KIT ANTI-FATIGA (composición + subtotal desde Resources)
+# ===========================================================================
+
+func get_wellness_item(item_id: String) -> WellnessItemData:
+	return WELLNESS_DB.get_item(item_id)
+
+func _on_kit_item_selected(slot: String, item_id: String) -> void:
+	var item: WellnessItemData = get_wellness_item(item_id)
+	if item == null or not kit_selection.has(slot) or item.category != slot:
+		push_warning("GlobalManager: selección de kit inválida -> %s / %s" % [slot, item_id])
+		return
+	kit_selection[slot] = item_id
+	_emitir_kit()
+
+func _on_kit_slot_cleared(slot: String) -> void:
+	if slot.is_empty():
+		for k in kit_selection.keys():
+			kit_selection[k] = ""
+	elif kit_selection.has(slot):
+		kit_selection[slot] = ""
+	_emitir_kit()
+
+func _on_kit_requested() -> void:
+	_emitir_kit()
+
+func _emitir_kit() -> void:
+	EventBus.kit_changed.emit(kit_selection.duplicate(), calculate_kit_subtotal(kit_selection))
+
+## Subtotal del kit: suma de WellnessItemData.price de cada sección ocupada.
+## Ids vacíos o inexistentes no suman (casos límite probados en Lab 10).
+func calculate_kit_subtotal(selection: Dictionary) -> int:
+	var subtotal: int = 0
+	for slot in selection.keys():
+		var item: WellnessItemData = get_wellness_item(str(selection[slot]))
+		if item != null:
+			subtotal += item.price
+	return subtotal
+
+## Alivio total estimado del kit (suma de WellnessItemData.relief).
+func calculate_kit_relief(selection: Dictionary) -> int:
+	var total: int = 0
+	for slot in selection.keys():
+		var item: WellnessItemData = get_wellness_item(str(selection[slot]))
+		if item != null:
+			total += item.relief
+	return total
+
+## Recursos seleccionados en el orden oficial de secciones.
+func get_kit_items() -> Array[WellnessItemData]:
+	var out: Array[WellnessItemData] = []
+	for slot in WellnessItemData.CATEGORIAS:
+		var item: WellnessItemData = get_wellness_item(str(kit_selection.get(slot, "")))
+		if item != null:
+			out.append(item)
+	return out
+
+func clear_kit() -> void:
+	_on_kit_slot_cleared("")

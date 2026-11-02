@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="WellnessItemData" format=3]
+
+[ext_resource type="Script" path="res://src/data/wellness_item_data.gd" id="1_7g0fs"]
+[ext_resource type="Texture2D" path="res://src/assets/items/item_frutos_secos.svg" id="2_o2dx6"]
+
+[resource]
+script = ExtResource("1_7g0fs")
+id = "frutos_secos"
+display_name = "Mix de frutos secos"
+description = "Grasas saludables para el cerebro."
+category = "snack"
+texture = ExtResource("2_o2dx6")
+price = 6000
+relief = 4

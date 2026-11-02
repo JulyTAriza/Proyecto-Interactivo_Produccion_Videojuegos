@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="WellnessItemData" format=3]
+
+[ext_resource type="Script" path="res://src/data/wellness_item_data.gd" id="1_kvrwb"]
+[ext_resource type="Texture2D" path="res://src/assets/items/item_fruta.svg" id="2_6ebpk"]
+
+[resource]
+script = ExtResource("1_kvrwb")
+id = "fruta"
+display_name = "Fruta picada"
+description = "Snack ligero y refrescante."
+category = "snack"
+texture = ExtResource("2_6ebpk")
+price = 5000
+relief = 3

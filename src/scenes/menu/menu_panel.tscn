@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" path="res://src/assets/icons/icon_settings.svg" id="ico_settings"]
 [ext_resource type="Texture2D" path="res://src/assets/icons/icon_info.svg" id="ico_info"]
 [ext_resource type="Texture2D" path="res://src/assets/icons/icon_exit.svg" id="ico_exit"]
+[ext_resource type="Texture2D" path="res://src/assets/icons/icon_kit.svg" id="ico_kit"]
 
 [node name="MenuPanel" type="Control"]
 layout_mode = 3
@@ -132,9 +133,20 @@ target_scene = "res://src/scenes/shop/buy_panel.tscn"
 icon = ExtResource("ico_shop")
 alignment = 0
 focus_neighbor_top = NodePath("../BtnJugar")
-focus_neighbor_bottom = NodePath("../BtnCupones")
+focus_neighbor_bottom = NodePath("../BtnKit")
 focus_neighbor_left = NodePath("../../VBoxEvaluacion/BtnHistorial")
 focus_neighbor_right = NodePath("../../VBoxOtros/BtnCreditos")
+
+[node name="BtnKit" parent="Margin/VBoxRoot/HBoxSecciones/VBoxJuego" instance=ExtResource("2")]
+layout_mode = 2
+text = "Arma tu Kit Anti-Fatiga"
+icon = ExtResource("ico_kit")
+alignment = 0
+target_scene = "res://src/scenes/shop/buy_panel_interactive.tscn"
+focus_neighbor_top = NodePath("../BtnTienda")
+focus_neighbor_bottom = NodePath("../BtnCupones")
+focus_neighbor_left = NodePath("../../VBoxEvaluacion/BtnHistorial")
+focus_neighbor_right = NodePath("../../VBoxOtros/BtnSalir")
 
 [node name="BtnCupones" parent="Margin/VBoxRoot/HBoxSecciones/VBoxJuego" instance=ExtResource("2")]
 layout_mode = 2
@@ -142,7 +154,7 @@ text = "Mis cupones"
 target_scene = "res://src/scenes/coupon/coupon_event.tscn"
 icon = ExtResource("ico_coupon")
 alignment = 0
-focus_neighbor_top = NodePath("../BtnTienda")
+focus_neighbor_top = NodePath("../BtnKit")
 focus_neighbor_bottom = NodePath("../BtnJugar")
 focus_neighbor_left = NodePath("../../VBoxEvaluacion/BtnHistorial")
 focus_neighbor_right = NodePath("../../VBoxOtros/BtnSalir")
@@ -187,7 +199,7 @@ icon = ExtResource("ico_exit")
 alignment = 0
 focus_neighbor_top = NodePath("../BtnCreditos")
 focus_neighbor_bottom = NodePath("../BtnConfig")
-focus_neighbor_left = NodePath("../../VBoxJuego/BtnCupones")
+focus_neighbor_left = NodePath("../../VBoxJuego/BtnKit")
 focus_neighbor_right = NodePath("../../VBoxEvaluacion/BtnHistorial")
 
 [node name="HSeparator2" type="HSeparator" parent="Margin/VBoxRoot"]

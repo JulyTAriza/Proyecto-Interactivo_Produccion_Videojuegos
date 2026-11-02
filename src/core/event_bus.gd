@@ -73,3 +73,21 @@ signal purchase_updated(purchase: Dictionary)
 ## summary = { "items": Array, "subtotal": int, "discount": int,
 ##             "total": int, "coupon": Dictionary, "fecha": String }
 signal purchase_completed(summary: Dictionary)
+
+# ===========================================================================
+# KIT ANTI-FATIGA BASADO EN RESOURCES (Laboratorio 9)
+# ===========================================================================
+
+## El usuario elige un elemento del catálogo para una sección del kit
+## (slot = categoría: "bebida", "snack" o "actividad").
+signal kit_item_selected(slot: String, item_id: String)
+
+## El usuario vacía una sección del kit ("" = vaciar todo el kit).
+signal kit_slot_cleared(slot: String)
+
+## GlobalManager notifica la composición vigente del kit y su subtotal,
+## recalculado a partir de los recursos (WellnessItemData.price).
+signal kit_changed(selection: Dictionary, subtotal: int)
+
+## Petición explícita de la composición vigente del kit.
+signal kit_requested

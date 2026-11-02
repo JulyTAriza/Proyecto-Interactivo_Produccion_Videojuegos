@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="WellnessItemData" format=3]
+
+[ext_resource type="Script" path="res://src/data/wellness_item_data.gd" id="1_ap4jp"]
+[ext_resource type="Texture2D" path="res://src/assets/items/item_agua.svg" id="2_kie2c"]
+
+[resource]
+script = ExtResource("1_ap4jp")
+id = "agua"
+display_name = "Botella de agua"
+description = "Hidratarse mejora la atención sostenida."
+texture = ExtResource("2_kie2c")
+price = 3000
+relief = 3

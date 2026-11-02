@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="WellnessItemData" format=3]
+
+[ext_resource type="Script" path="res://src/data/wellness_item_data.gd" id="1_u0ibm"]
+[ext_resource type="Texture2D" path="res://src/assets/items/item_mindfulness.svg" id="2_pmlv6"]
+
+[resource]
+script = ExtResource("1_u0ibm")
+id = "mindfulness"
+display_name = "Sesión de mindfulness"
+description = "10 minutos de atención plena guiada."
+category = "actividad"
+texture = ExtResource("2_pmlv6")
+price = 12000
+relief = 8

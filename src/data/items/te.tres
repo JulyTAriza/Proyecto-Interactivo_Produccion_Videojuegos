@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="WellnessItemData" format=3]
+
+[ext_resource type="Script" path="res://src/data/wellness_item_data.gd" id="1_a0h8m"]
+[ext_resource type="Texture2D" path="res://src/assets/items/item_te.svg" id="2_v3504"]
+
+[resource]
+script = ExtResource("1_a0h8m")
+id = "te"
+display_name = "Té de manzanilla"
+description = "Bebida caliente que ayuda a bajar la tensión."
+texture = ExtResource("2_v3504")
+price = 4500
+relief = 4

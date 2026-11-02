@@ -3,6 +3,14 @@
 Todas las novedades notables de este proyecto se documentan en este
 archivo. El formato está inspirado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/).
 
+## [1.4.0] - 2026-11-01 — Laboratorio 9: datos con Resources y UI dinámica
+
+### Added
+- `WellnessItemData`, `WellnessDatabase`, `src/data/items/*.tres`, `wellness_catalog.tres`.
+- `buy_panel_interactive` (UI auto-poblada), `KitComposition`, `purchase_invoice_interactive`.
+- Señales `kit_item_selected`, `kit_slot_cleared`, `kit_changed`, `kit_requested`.
+- `ADR-006.md`; botón "Arma tu Kit Anti-Fatiga" en el menú.
+
 ## [1.3.0] - 2026-10-29 — Laboratorio 8: UI/UX y accesibilidad
 
 ### Added

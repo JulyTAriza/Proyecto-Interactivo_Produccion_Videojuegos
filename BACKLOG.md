@@ -13,13 +13,16 @@ Prioridades: **P1** imprescindible para la Beta · **P2** deseable para la Beta 
 - [x] Lab 8 — `PurchaseSuccessPopup` en la factura.
 - [x] Lab 8 — Accesibilidad: contraste AA verificado, tipografía legible, navegación por teclado,
       información independiente del color.
+- [x] Lab 9 — `WellnessItemData` + `WellnessDatabase` + catálogo `.tres` en `GlobalManager`.
+- [x] Lab 9 — Kit Anti-Fatiga con UI auto-poblada, composición por secciones y Tweens.
+- [x] Lab 9 — Factura interactiva con cupones persistentes y ADR-006.
 
 ## Pendiente para la Beta (priorizado)
 | Prioridad | Tarea | Origen |
 |---|---|---|
 | P1 | Completar la prueba con usuario real y trasladar sus hallazgos aquí | Lab 8 |
-| P1 | Catálogo de bienestar con `Resource` + UI auto-poblada (kit anti-fatiga) | Lab 9 |
 | P1 | Suite de pruebas automatizadas (GdUnit4) sobre cupones y reglas del minijuego | Lab 10 |
+| P2 | Que el alivio del kit comprado reduzca el índice de la evaluación de fatiga | Lab 9 |
 | P2 | Opción de "texto grande" en Configuración (escala de fuente del Theme) | Heurística Lab 8 |
 | P2 | Sonido de retroalimentación al atrapar ideas / distractores (con opción de silenciar) | Heurística Lab 8 |
 | P2 | Mostrar en el minijuego una mini-leyenda permanente de las tres formas | Heurística Lab 8 |

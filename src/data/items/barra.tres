@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="WellnessItemData" format=3]
+
+[ext_resource type="Script" path="res://src/data/wellness_item_data.gd" id="1_f0tqj"]
+[ext_resource type="Texture2D" path="res://src/assets/items/item_barra.svg" id="2_y8f30"]
+
+[resource]
+script = ExtResource("1_f0tqj")
+id = "barra"
+display_name = "Barra de avena"
+description = "Energía de liberación lenta."
+category = "snack"
+texture = ExtResource("2_y8f30")
+price = 3500
+relief = 2

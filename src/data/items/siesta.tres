@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="WellnessItemData" format=3]
+
+[ext_resource type="Script" path="res://src/data/wellness_item_data.gd" id="1_xolhd"]
+[ext_resource type="Texture2D" path="res://src/assets/items/item_siesta.svg" id="2_h7kgm"]
+
+[resource]
+script = ExtResource("1_xolhd")
+id = "siesta"
+display_name = "Siesta reparadora"
+description = "20 minutos de descanso con alarma suave."
+category = "actividad"
+texture = ExtResource("2_h7kgm")
+price = 9000
+relief = 7

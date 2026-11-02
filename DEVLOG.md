@@ -412,3 +412,43 @@ versión Web.
   alta legibilidad reducen el esfuerzo).
 - **Qué entendería un usuario nuevo de inmediato:** el menú por secciones y la tienda; lo que más
   claridad requiere es la regla de compra mínima de los cupones.
+
+## [2026-11-01] - Laboratorio 9: Interfaz Dinámica y Representación de Datos mediante Recursos
+
+**Autor:** July Tatiana Ariza
+
+### Actividades Realizadas
+- Se creó la clase `WellnessItemData` (`Resource`, `@export` de id, nombre, descripción, categoría,
+  textura, precio y alivio) y 9 recursos `.tres` con ilustraciones SVG propias.
+- Se creó `WellnessDatabase` y su instancia `wellness_catalog.tres`, precargada en `GlobalManager`
+  (`GlobalManager.wellness_items`).
+- Nueva pantalla **Arma tu Kit Anti-Fatiga** (`buy_panel_interactive.tscn`): catálogo auto-poblado en
+  un `ScrollContainer`, tarjetas creadas por código y conectadas con `bind()`.
+- Componente `KitComposition` (bebida, snack, actividad) con secciones generadas por código, botón
+  "Quitar" por sección y sección activa seleccionable.
+- Señales nuevas `kit_item_selected`, `kit_slot_cleared`, `kit_changed` y `kit_requested`;
+  `GlobalManager` recalcula subtotal y alivio a partir de los recursos.
+- Tweens: pulsación de la tarjeta, rebote/destello de la sección, conteo del subtotal y
+  desplazamiento animado a la categoría.
+- `purchase_invoice_interactive.tscn`: líneas generadas desde los recursos, mejor cupón persistente,
+  consumo al confirmar y `PurchaseSuccessPopup`.
+- `ADR-006.md` documenta la decisión de arquitectura. La prueba de sistema ahora también compra un kit
+  (ejecuciones 5 y 6 de `tools/run_system_test.sh`: PASA).
+
+### Desafíos y Soluciones
+* Desafío: los `.tres` con arreglos tipados (`Array[WellnessItemData]`) son fáciles de romper a mano.
+  Solución: se generaron con `ResourceSaver` (`tools/build_catalog.gd`), igual que al guardarlos desde el Inspector.
+* Desafío: el `Button` no calcula su tamaño mínimo a partir de los hijos que contiene.
+  Solución: tamaño mínimo explícito en las secciones del kit e iconos limitados con `icon_max_width`.
+
+### Estado Final
+El kit se compone desde datos, la UI se genera sola y la compra consume cupones persistentes.
+
+### Retrospectiva
+- **Ventaja de separar datos e interfaz:** el mismo recurso alimenta tarjeta, sección del kit, línea
+  de factura y cálculo del subtotal sin duplicar información.
+- **Por qué generar UI por código:** 9 tarjetas idénticas en estructura se mantienen en una sola
+  función; un cambio de diseño se aplica a todas.
+- **Crecimiento sin tocar código:** un nuevo `.tres` en el catálogo aparece en la tienda y la factura.
+- **Aporte del EventBus:** la factura del kit usa la misma API de cupones (`get_best_coupon`,
+  `register_purchase`) que la tienda de planes: el sistema de cupones no tuvo que cambiar.

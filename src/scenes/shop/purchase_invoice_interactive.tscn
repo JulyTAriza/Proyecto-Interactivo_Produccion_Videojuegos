@@ -1,0 +1,207 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/scenes/shop/purchase_invoice_interactive.gd" id="1"]
+[ext_resource type="PackedScene" path="res://src/components/navigation/button_nav.tscn" id="2"]
+[ext_resource type="Theme" path="res://src/assets/ui/ui_theme.tres" id="theme"]
+[ext_resource type="Texture2D" path="res://src/assets/icons/icon_cart.svg" id="ico_cart"]
+[ext_resource type="Texture2D" path="res://src/assets/icons/icon_back.svg" id="ico_back"]
+[ext_resource type="Texture2D" path="res://src/assets/icons/icon_close.svg" id="ico_close"]
+[ext_resource type="Texture2D" path="res://src/assets/icons/icon_check.svg" id="ico_check"]
+
+[node name="PurchaseInvoiceInteractive" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+theme = ExtResource("theme")
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 24
+
+[node name="Scroll" type="ScrollContainer" parent="Margin"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="VBox" type="VBoxContainer" parent="Margin/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 14
+
+[node name="LblTitulo" type="Label" parent="Margin/Scroll/VBox"]
+layout_mode = 2
+text = "Factura de tu Kit Anti-Fatiga"
+theme_type_variation = &"TituloLabel"
+
+[node name="Lineas" type="VBoxContainer" parent="Margin/Scroll/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="HSeparator1" type="HSeparator" parent="Margin/Scroll/VBox"]
+layout_mode = 2
+
+[node name="Grid" type="GridContainer" parent="Margin/Scroll/VBox"]
+layout_mode = 2
+theme_override_constants/h_separation = 40
+theme_override_constants/v_separation = 8
+columns = 2
+
+[node name="LblSubtotal" type="Label" parent="Margin/Scroll/VBox/Grid"]
+layout_mode = 2
+text = "Subtotal"
+
+[node name="LblSubtotalValor" type="Label" parent="Margin/Scroll/VBox/Grid"]
+layout_mode = 2
+text = "$0"
+horizontal_alignment = 2
+
+[node name="LblDescuento" type="Label" parent="Margin/Scroll/VBox/Grid"]
+layout_mode = 2
+text = "Descuento por cupón"
+
+[node name="LblDescuentoValor" type="Label" parent="Margin/Scroll/VBox/Grid"]
+layout_mode = 2
+text = "-$0"
+horizontal_alignment = 2
+
+[node name="LblTotal" type="Label" parent="Margin/Scroll/VBox/Grid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Total a pagar"
+
+[node name="LblTotalValor" type="Label" parent="Margin/Scroll/VBox/Grid"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.36, 0.87, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "$0"
+horizontal_alignment = 2
+
+[node name="LblAlivio" type="Label" parent="Margin/Scroll/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.024, 0.839, 0.627, 1)
+text = "Alivio estimado"
+
+[node name="ChkUsarCupon" type="CheckButton" parent="Margin/Scroll/VBox"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Usar mi mejor cupón"
+
+[node name="LblCoupon" type="Label" parent="Margin/Scroll/VBox"]
+layout_mode = 2
+text = "Cupón"
+autowrap_mode = 3
+theme_type_variation = &"SecundarioLabel"
+
+[node name="HSeparator2" type="HSeparator" parent="Margin/Scroll/VBox"]
+layout_mode = 2
+
+[node name="HBoxBotones" type="HBoxContainer" parent="Margin/Scroll/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="BtnConfirmar" type="Button" parent="Margin/Scroll/VBox/HBoxBotones"]
+layout_mode = 2
+text = "Confirmar compra"
+icon = ExtResource("ico_cart")
+
+[node name="BtnVolver" parent="Margin/Scroll/VBox/HBoxBotones" instance=ExtResource("2")]
+layout_mode = 2
+text = "Volver al kit"
+target_scene = "res://src/scenes/shop/buy_panel_interactive.tscn"
+discard_previous = true
+icon = ExtResource("ico_back")
+
+[node name="BtnMenu" parent="Margin/Scroll/VBox/HBoxBotones" instance=ExtResource("2")]
+layout_mode = 2
+text = "Volver al menú"
+target_scene = "res://src/scenes/menu/menu_panel.tscn"
+discard_previous = true
+
+icon = ExtResource("ico_back")
+
+[node name="Velo" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.02, 0.03, 0.07, 0.72)
+
+[node name="PurchaseSuccessPopup" type="Panel" parent="."]
+visible = false
+custom_minimum_size = Vector2(480, 290)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -240.0
+offset_top = -145.0
+offset_right = 240.0
+offset_bottom = 145.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"ExitoPanel"
+
+[node name="BtnCerrar" type="Button" parent="PurchaseSuccessPopup"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -52.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 52.0
+grow_horizontal = 0
+tooltip_text = "Cerrar"
+icon = ExtResource("ico_close")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PurchaseSuccessPopup"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 32.0
+offset_top = 30.0
+offset_right = -32.0
+offset_bottom = -26.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="LblTitulo" type="Label" parent="PurchaseSuccessPopup/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"TituloLabel"
+theme_override_colors/font_color = Color(0.024, 0.839, 0.627, 1)
+text = "¡Compra realizada!"
+horizontal_alignment = 1
+
+[node name="LblMensaje" type="Label" parent="PurchaseSuccessPopup/VBoxContainer"]
+layout_mode = 2
+text = "Tu pedido está en proceso."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="BtnContinuar" parent="PurchaseSuccessPopup/VBoxContainer" instance=ExtResource("2")]
+custom_minimum_size = Vector2(220, 48)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Continuar"
+icon = ExtResource("ico_check")
+target_scene = "res://src/scenes/menu/menu_panel.tscn"
+discard_previous = true
