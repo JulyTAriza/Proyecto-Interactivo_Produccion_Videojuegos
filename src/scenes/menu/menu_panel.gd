@@ -18,6 +18,13 @@ func _ready() -> void:
 	print("Panel de menú cargado (navegación declarativa vía ButtonNav).")
 	btn_salir.pressed.connect(_on_btn_salir_pressed)
 	btn_salir.visible = not OS.has_feature("web")
+	if not btn_salir.visible:
+		# Sin "Cerrar aplicación", el ciclo vertical de la columna se cierra
+		# entre Configuración y Créditos.
+		var config: Control = btn_salir.get_node(btn_salir.focus_neighbor_bottom)
+		var creditos: Control = btn_salir.get_node(btn_salir.focus_neighbor_top)
+		creditos.focus_neighbor_bottom = creditos.get_path_to(config)
+		config.focus_neighbor_top = config.get_path_to(creditos)
 	EventBus.coupons_changed.connect(_on_coupons_changed)
 	EventBus.coupons_requested.emit()
 	btn_simular.grab_focus.call_deferred()

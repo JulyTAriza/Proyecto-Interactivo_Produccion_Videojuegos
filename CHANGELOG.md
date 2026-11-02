@@ -3,6 +3,15 @@
 Todas las novedades notables de este proyecto se documentan en este
 archivo. El formato está inspirado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/).
 
+## [1.3.0] - 2026-10-29 — Laboratorio 8: UI/UX y accesibilidad
+
+### Added
+- `src/assets/ui/ui_theme.tres` (Button Normal/Hover/Pressed/Disabled/Focus, paneles, variaciones).
+- Fuente Atkinson Hyperlegible, iconos SVG y fondo del menú.
+- `PurchaseSuccessPopup` en la factura; botón "Quitar plan" en la tienda.
+- `ButtonNav.grab_initial_focus`; `focus_neighbor` en el menú.
+- `USER_FEEDBACK.md`, `BACKLOG.md`, `doc/ACCESIBILIDAD.md`, `tools/contrast_check.py`.
+
 ## [1.2.0] - 2026-10-22 — Laboratorio 7: Vertical Slice y publicación Web
 
 ### Added

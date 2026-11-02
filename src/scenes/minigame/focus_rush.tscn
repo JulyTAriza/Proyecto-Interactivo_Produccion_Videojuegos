@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://src/scenes/minigame/focus_rush.gd" id="1"]
 [ext_resource type="Script" path="res://src/scenes/minigame/focus_play_area.gd" id="2"]
+[ext_resource type="Theme" path="res://src/assets/ui/ui_theme.tres" id="theme"]
 
 [node name="FocusRush" type="Control"]
 layout_mode = 3
@@ -11,6 +12,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1")
+theme = ExtResource("theme")
 
 [node name="Fondo" type="ColorRect" parent="."]
 layout_mode = 1
@@ -40,8 +42,8 @@ theme_override_constants/separation = 8
 
 [node name="LblTitulo" type="Label" parent="Margin/VBox"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 26
 text = "Enfoque Rush: reto de atención"
+theme_type_variation = &"SeccionLabel"
 
 [node name="HUD" type="HBoxContainer" parent="Margin/VBox"]
 layout_mode = 2
@@ -89,10 +91,10 @@ script = ExtResource("2")
 
 [node name="LblAyuda" type="Label" parent="Margin/VBox"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.8, 0.84, 0.9, 1)
 theme_override_font_sizes/font_size = 16
 text = "Mover: flechas o A/D (o mouse)   ·   Pausa: Esc o P"
 horizontal_alignment = 1
+theme_type_variation = &"SecundarioLabel"
 
 [node name="LblCuenta" type="Label" parent="."]
 visible = false
@@ -145,9 +147,9 @@ theme_override_constants/separation = 14
 
 [node name="LblTitulo" type="Label" parent="Overlay/Center/Panel/Margin/VBox"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 28
 text = "Enfoque Rush"
 horizontal_alignment = 1
+theme_type_variation = &"TituloLabel"
 
 [node name="LblTexto" type="Label" parent="Overlay/Center/Panel/Margin/VBox"]
 custom_minimum_size = Vector2(500, 0)

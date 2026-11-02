@@ -21,8 +21,15 @@ extends Button
 ## (registra la escena de destino en el historial).
 @export var discard_previous: bool = false
 
+## Accesibilidad (Lab 8): si está activo, este botón recibe el foco de
+## teclado al abrir la pantalla, para que se pueda operar sin mouse aun en
+## paneles que no tienen script propio (Configuración, Créditos).
+@export var grab_initial_focus: bool = false
+
 func _ready() -> void:
 	pressed.connect(_on_pressed)
+	if grab_initial_focus:
+		grab_focus.call_deferred()
 
 func _on_pressed() -> void:
 	if target_scene.is_empty():

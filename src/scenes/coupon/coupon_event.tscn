@@ -2,6 +2,10 @@
 
 [ext_resource type="Script" path="res://src/scenes/coupon/coupon_event.gd" id="1"]
 [ext_resource type="PackedScene" path="res://src/components/navigation/button_nav.tscn" id="2"]
+[ext_resource type="Theme" path="res://src/assets/ui/ui_theme.tres" id="theme"]
+[ext_resource type="Texture2D" path="res://src/assets/icons/icon_shop.svg" id="ico_shop"]
+[ext_resource type="Texture2D" path="res://src/assets/icons/icon_play.svg" id="ico_play"]
+[ext_resource type="Texture2D" path="res://src/assets/icons/icon_back.svg" id="ico_back"]
 
 [sub_resource type="StyleBoxFlat" id="StyleTicket"]
 bg_color = Color(0.996, 0.82, 0.4, 1)
@@ -23,6 +27,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1")
+theme = ExtResource("theme")
 
 [node name="Margin" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -47,8 +52,8 @@ theme_override_constants/separation = 14
 
 [node name="LblTitulo" type="Label" parent="Margin/Scroll/VBox"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 28
 text = "¡Cupón obtenido!"
+theme_type_variation = &"TituloLabel"
 
 [node name="Tarjeta" type="PanelContainer" parent="Margin/Scroll/VBox"]
 custom_minimum_size = Vector2(420, 0)
@@ -98,9 +103,9 @@ autowrap_mode = 3
 
 [node name="LblResumen" type="Label" parent="Margin/Scroll/VBox"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.8, 0.84, 0.9, 1)
 text = "Cargando cupones..."
 autowrap_mode = 3
+theme_type_variation = &"SecundarioLabel"
 
 [node name="Lista" type="VBoxContainer" parent="Margin/Scroll/VBox"]
 layout_mode = 2
@@ -117,14 +122,18 @@ theme_override_constants/separation = 12
 layout_mode = 2
 text = "Ir a la tienda"
 target_scene = "res://src/scenes/shop/buy_panel.tscn"
+icon = ExtResource("ico_shop")
 
 [node name="BtnJugar" parent="Margin/Scroll/VBox/HBoxBotones" instance=ExtResource("2")]
 layout_mode = 2
 text = "Jugar Enfoque Rush"
 target_scene = "res://src/scenes/minigame/focus_rush.tscn"
+icon = ExtResource("ico_play")
 
 [node name="BtnVolver" parent="Margin/Scroll/VBox/HBoxBotones" instance=ExtResource("2")]
 layout_mode = 2
 text = "Volver al menú"
 target_scene = "res://src/scenes/menu/menu_panel.tscn"
 discard_previous = true
+
+icon = ExtResource("ico_back")

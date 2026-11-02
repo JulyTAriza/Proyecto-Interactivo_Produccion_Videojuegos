@@ -367,3 +367,48 @@ en navegador.
    usa `delta` y se comporta igual.
 5. **Para el siguiente sprint:** Theme centralizado, iconografía,
    accesibilidad y retroalimentación al comprar.
+
+## [2026-10-29] - Laboratorio 8: Diseño de Interfaces y Experiencia de Usuario
+
+**Autor:** July Tatiana Ariza
+
+### Actividades Realizadas
+- Se preparó `USER_FEEDBACK.md` con la plantilla y el protocolo de la prueba con usuario real, y se
+  registró una evaluación heurística previa cuyos hallazgos ya se corrigieron.
+- Se creó e integró `src/assets/ui/ui_theme.tres` con `StyleBoxFlat` para los estados Normal, Hover,
+  Pressed y Disabled de `Button` (más Focus), paneles, barra de progreso y variaciones
+  `TituloLabel`, `SeccionLabel` y `SecundarioLabel`; se asignó al nodo raíz de `main_app`,
+  `menu_panel`, `buy_panel`, `purchase_invoice`, `coupon_event` y del resto de pantallas.
+- Se incorporó en el menú un `TextureRect` de fondo (Ignore Size, Keep Aspect Centered, Z Index -1,
+  Mouse Filter Ignore) y un set de iconos SVG propios para acciones comunes.
+- Se diseñó `PurchaseSuccessPopup` en la factura (título, mensaje con monto y ahorro, botón Continuar
+  con `ButtonNav` hacia el menú y X para cerrar).
+- Se implementaron 4 mejoras de accesibilidad: contraste AA verificado, Atkinson Hyperlegible con
+  tamaños ≥ 16 px, navegación por teclado (`focus_neighbor` + foco inicial) e información
+  independiente del color (ver `doc/ACCESIBILIDAD.md`).
+
+### Desafíos y Soluciones
+* Desafío: el `TextureRect` de fondo podía bloquear los clics de los botones del menú.
+  Solución: Mouse Filter en Ignore y Z Index negativo.
+* Desafío: el anillo de foco con `expand_margin` se recortaba dentro de los `ScrollContainer`.
+  Solución: el borde de foco se dibuja dentro del botón.
+* Desafío: Configuración y Créditos no tienen script, así que no podían dar el foco inicial.
+  Solución: nueva propiedad exportada `grab_initial_focus` en `ButtonNav`.
+
+### Estado Final
+La interfaz quedó refinada con criterios de UX/UI y accesibilidad hacia la Versión Beta. Flujo
+completo verificado de nuevo con `tools/run_system_test.sh` (PASA) y recorrido con teclado en la
+versión Web.
+
+### Retrospectiva (Sprint 3 — UI/UX)
+- **Cambio que más mejoró la experiencia:** el popup de compra realizada y los estados Hover/Focus:
+  ahora cada acción tiene respuesta visible.
+- **Dificultad con el Theme:** decidir qué se define en el Theme y qué queda como override local;
+  se resolvió con variaciones de tipo para títulos, secciones y textos secundarios.
+- **Aporte de la prueba con usuario:** pendiente de la sesión real; la evaluación heurística ya
+  detectó que la compra terminaba sin confirmación visible.
+- **Por qué esas mejoras de accesibilidad:** el minijuego depende de distinguir estímulos rápidos
+  (forma + símbolo, no solo color) y la app se usa con fatiga mental (contraste alto y fuente de
+  alta legibilidad reducen el esfuerzo).
+- **Qué entendería un usuario nuevo de inmediato:** el menú por secciones y la tienda; lo que más
+  claridad requiere es la regla de compra mínima de los cupones.

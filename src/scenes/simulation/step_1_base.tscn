@@ -2,6 +2,10 @@
 
 [ext_resource type="Script" path="res://src/scenes/simulation/step_1_base.gd" id="1"]
 [ext_resource type="PackedScene" path="res://src/components/navigation/button_nav.tscn" id="2"]
+[ext_resource type="Theme" path="res://src/assets/ui/ui_theme.tres" id="theme"]
+[ext_resource type="Texture2D" path="res://src/assets/icons/icon_check.svg" id="ico_check"]
+[ext_resource type="Texture2D" path="res://src/assets/icons/icon_brain.svg" id="ico_brain"]
+[ext_resource type="Texture2D" path="res://src/assets/icons/icon_back.svg" id="ico_back"]
 
 [node name="Step1Base" type="Control"]
 layout_mode = 3
@@ -11,6 +15,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1")
+theme = ExtResource("theme")
 
 [node name="Margin" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -35,22 +40,22 @@ theme_override_constants/separation = 14
 
 [node name="LblTitulo" type="Label" parent="Margin/Scroll/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 26
 text = "Evaluación de Fatiga Cognitiva"
+theme_type_variation = &"TituloLabel"
 
 [node name="LblInstruccion" type="Label" parent="Margin/Scroll/VBoxContainer"]
 layout_mode = 2
 autowrap_mode = 3
-theme_override_colors/font_color = Color(0.78, 0.8, 0.85, 1)
 text = "1) Elige tu perfil base. 2) Marca los síntomas que presentas (puedes marcar uno varias veces si se repite). El índice total se recalcula automáticamente en GlobalManager."
+theme_type_variation = &"SecundarioLabel"
 
 [node name="HSeparator1" type="HSeparator" parent="Margin/Scroll/VBoxContainer"]
 layout_mode = 2
 
 [node name="LblBase" type="Label" parent="Margin/Scroll/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
 text = "Perfil Base"
+theme_type_variation = &"SeccionLabel"
 
 [node name="HBoxBase" type="HBoxContainer" parent="Margin/Scroll/VBoxContainer"]
 layout_mode = 2
@@ -76,8 +81,8 @@ layout_mode = 2
 
 [node name="LblSintomas" type="Label" parent="Margin/Scroll/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
 text = "Síntomas (cada clic suma un nivel de frecuencia)"
+theme_type_variation = &"SeccionLabel"
 
 [node name="BtnConcentracion" type="Button" parent="Margin/Scroll/VBoxContainer"]
 layout_mode = 2
@@ -111,13 +116,14 @@ text = "Índice de Fatiga Total: 0"
 [node name="LblPersistencia" type="Label" parent="Margin/Scroll/VBoxContainer"]
 layout_mode = 2
 autowrap_mode = 3
-theme_override_font_sizes/font_size = 13
+theme_override_font_sizes/font_size = 16
 theme_override_colors/font_color = Color(0.55, 0.58, 0.63, 1)
 text = "Tu progreso se guarda automáticamente. Puedes cerrar la app y al volver seguirás donde ibas."
 
 [node name="BtnFinalizar" type="Button" parent="Margin/Scroll/VBoxContainer"]
 layout_mode = 2
 text = "Finalizar y Guardar Evaluación"
+icon = ExtResource("ico_check")
 
 [node name="LblConfirmacion" type="Label" parent="Margin/Scroll/VBoxContainer"]
 visible = false
@@ -131,6 +137,7 @@ text = "Listo: evaluación guardada en tu historial"
 visible = false
 layout_mode = 2
 text = "Iniciar Nueva Evaluación"
+icon = ExtResource("ico_brain")
 
 [node name="HSeparator4" type="HSeparator" parent="Margin/Scroll/VBoxContainer"]
 layout_mode = 2
@@ -141,3 +148,5 @@ size_flags_horizontal = 0
 text = "Volver al Menú"
 target_scene = "res://src/scenes/menu/menu_panel.tscn"
 discard_previous = true
+
+icon = ExtResource("ico_back")

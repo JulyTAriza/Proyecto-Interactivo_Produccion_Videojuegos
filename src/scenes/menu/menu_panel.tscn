@@ -2,6 +2,16 @@
 
 [ext_resource type="Script" path="res://src/scenes/menu/menu_panel.gd" id="1"]
 [ext_resource type="PackedScene" path="res://src/components/navigation/button_nav.tscn" id="2"]
+[ext_resource type="Theme" path="res://src/assets/ui/ui_theme.tres" id="theme"]
+[ext_resource type="Texture2D" path="res://src/assets/ui/bg_menu.png" id="bg"]
+[ext_resource type="Texture2D" path="res://src/assets/icons/icon_brain.svg" id="ico_brain"]
+[ext_resource type="Texture2D" path="res://src/assets/icons/icon_history.svg" id="ico_history"]
+[ext_resource type="Texture2D" path="res://src/assets/icons/icon_play.svg" id="ico_play"]
+[ext_resource type="Texture2D" path="res://src/assets/icons/icon_shop.svg" id="ico_shop"]
+[ext_resource type="Texture2D" path="res://src/assets/icons/icon_coupon.svg" id="ico_coupon"]
+[ext_resource type="Texture2D" path="res://src/assets/icons/icon_settings.svg" id="ico_settings"]
+[ext_resource type="Texture2D" path="res://src/assets/icons/icon_info.svg" id="ico_info"]
+[ext_resource type="Texture2D" path="res://src/assets/icons/icon_exit.svg" id="ico_exit"]
 
 [node name="MenuPanel" type="Control"]
 layout_mode = 3
@@ -11,6 +21,20 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1")
+theme = ExtResource("theme")
+
+[node name="Fondo" type="TextureRect" parent="."]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("bg")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="Margin" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -30,14 +54,14 @@ theme_override_constants/separation = 14
 
 [node name="LblTitulo" type="Label" parent="Margin/VBoxRoot"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 32
 text = "Detector de Fatiga Cognitiva"
+theme_type_variation = &"TituloLabel"
 
 [node name="LblSubtitulo" type="Label" parent="Margin/VBoxRoot"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.8, 0.84, 0.9, 1)
 text = "Autoevaluación breve de fatiga mental y reto de atención con recompensas de bienestar."
 autowrap_mode = 3
+theme_type_variation = &"SecundarioLabel"
 
 [node name="HSeparator1" type="HSeparator" parent="Margin/VBoxRoot"]
 layout_mode = 2
@@ -54,18 +78,30 @@ theme_override_constants/separation = 8
 [node name="LblEvaluacion" type="Label" parent="Margin/VBoxRoot/HBoxSecciones/VBoxEvaluacion"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.36, 0.87, 1, 1)
-theme_override_font_sizes/font_size = 20
 text = "Evaluación"
+theme_type_variation = &"SeccionLabel"
 
 [node name="BtnSimular" parent="Margin/VBoxRoot/HBoxSecciones/VBoxEvaluacion" instance=ExtResource("2")]
 layout_mode = 2
 text = "Iniciar Evaluación"
 target_scene = "res://src/scenes/simulation/step_1_base.tscn"
+icon = ExtResource("ico_brain")
+alignment = 0
+focus_neighbor_top = NodePath("../BtnHistorial")
+focus_neighbor_bottom = NodePath("../BtnHistorial")
+focus_neighbor_left = NodePath("../../VBoxOtros/BtnConfig")
+focus_neighbor_right = NodePath("../../VBoxJuego/BtnJugar")
 
 [node name="BtnHistorial" parent="Margin/VBoxRoot/HBoxSecciones/VBoxEvaluacion" instance=ExtResource("2")]
 layout_mode = 2
 text = "Historial de Evaluaciones"
 target_scene = "res://src/scenes/history/history_panel.tscn"
+icon = ExtResource("ico_history")
+alignment = 0
+focus_neighbor_top = NodePath("../BtnSimular")
+focus_neighbor_bottom = NodePath("../BtnSimular")
+focus_neighbor_left = NodePath("../../VBoxOtros/BtnCreditos")
+focus_neighbor_right = NodePath("../../VBoxJuego/BtnTienda")
 
 [node name="VBoxJuego" type="VBoxContainer" parent="Margin/VBoxRoot/HBoxSecciones"]
 custom_minimum_size = Vector2(260, 0)
@@ -75,23 +111,41 @@ theme_override_constants/separation = 8
 [node name="LblJuego" type="Label" parent="Margin/VBoxRoot/HBoxSecciones/VBoxJuego"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.82, 0.4, 1)
-theme_override_font_sizes/font_size = 20
 text = "Minijuego y tienda"
+theme_type_variation = &"SeccionLabel"
 
 [node name="BtnJugar" parent="Margin/VBoxRoot/HBoxSecciones/VBoxJuego" instance=ExtResource("2")]
 layout_mode = 2
 text = "Jugar Enfoque Rush"
 target_scene = "res://src/scenes/minigame/focus_rush.tscn"
+icon = ExtResource("ico_play")
+alignment = 0
+focus_neighbor_top = NodePath("../BtnCupones")
+focus_neighbor_bottom = NodePath("../BtnTienda")
+focus_neighbor_left = NodePath("../../VBoxEvaluacion/BtnSimular")
+focus_neighbor_right = NodePath("../../VBoxOtros/BtnConfig")
 
 [node name="BtnTienda" parent="Margin/VBoxRoot/HBoxSecciones/VBoxJuego" instance=ExtResource("2")]
 layout_mode = 2
 text = "Tienda de Bienestar"
 target_scene = "res://src/scenes/shop/buy_panel.tscn"
+icon = ExtResource("ico_shop")
+alignment = 0
+focus_neighbor_top = NodePath("../BtnJugar")
+focus_neighbor_bottom = NodePath("../BtnCupones")
+focus_neighbor_left = NodePath("../../VBoxEvaluacion/BtnHistorial")
+focus_neighbor_right = NodePath("../../VBoxOtros/BtnCreditos")
 
 [node name="BtnCupones" parent="Margin/VBoxRoot/HBoxSecciones/VBoxJuego" instance=ExtResource("2")]
 layout_mode = 2
 text = "Mis cupones"
 target_scene = "res://src/scenes/coupon/coupon_event.tscn"
+icon = ExtResource("ico_coupon")
+alignment = 0
+focus_neighbor_top = NodePath("../BtnTienda")
+focus_neighbor_bottom = NodePath("../BtnJugar")
+focus_neighbor_left = NodePath("../../VBoxEvaluacion/BtnHistorial")
+focus_neighbor_right = NodePath("../../VBoxOtros/BtnSalir")
 
 [node name="VBoxOtros" type="VBoxContainer" parent="Margin/VBoxRoot/HBoxSecciones"]
 custom_minimum_size = Vector2(220, 0)
@@ -101,28 +155,47 @@ theme_override_constants/separation = 8
 [node name="LblOtros" type="Label" parent="Margin/VBoxRoot/HBoxSecciones/VBoxOtros"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.8, 0.84, 0.9, 1)
-theme_override_font_sizes/font_size = 20
 text = "Aplicación"
+theme_type_variation = &"SeccionLabel"
 
 [node name="BtnConfig" parent="Margin/VBoxRoot/HBoxSecciones/VBoxOtros" instance=ExtResource("2")]
 layout_mode = 2
 text = "Configuración"
 target_scene = "res://src/scenes/config/config_panel.tscn"
+icon = ExtResource("ico_settings")
+alignment = 0
+focus_neighbor_top = NodePath("../BtnSalir")
+focus_neighbor_bottom = NodePath("../BtnCreditos")
+focus_neighbor_left = NodePath("../../VBoxJuego/BtnJugar")
+focus_neighbor_right = NodePath("../../VBoxEvaluacion/BtnSimular")
 
 [node name="BtnCreditos" parent="Margin/VBoxRoot/HBoxSecciones/VBoxOtros" instance=ExtResource("2")]
 layout_mode = 2
 text = "Créditos"
 target_scene = "res://src/scenes/credits/credits_panel.tscn"
+icon = ExtResource("ico_info")
+alignment = 0
+focus_neighbor_top = NodePath("../BtnConfig")
+focus_neighbor_bottom = NodePath("../BtnSalir")
+focus_neighbor_left = NodePath("../../VBoxJuego/BtnTienda")
+focus_neighbor_right = NodePath("../../VBoxEvaluacion/BtnHistorial")
 
 [node name="BtnSalir" type="Button" parent="Margin/VBoxRoot/HBoxSecciones/VBoxOtros"]
 layout_mode = 2
 text = "Cerrar Aplicación"
+icon = ExtResource("ico_exit")
+alignment = 0
+focus_neighbor_top = NodePath("../BtnCreditos")
+focus_neighbor_bottom = NodePath("../BtnConfig")
+focus_neighbor_left = NodePath("../../VBoxJuego/BtnCupones")
+focus_neighbor_right = NodePath("../../VBoxEvaluacion/BtnHistorial")
 
 [node name="HSeparator2" type="HSeparator" parent="Margin/VBoxRoot"]
 layout_mode = 2
 
 [node name="LblEstado" type="Label" parent="Margin/VBoxRoot"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.8, 0.84, 0.9, 1)
 text = "Estado del Sistema: Listo."
 autowrap_mode = 3
+
+theme_type_variation = &"SecundarioLabel"

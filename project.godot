@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Detector de Fatiga Cognitiva"
-config/version="1.2.0"
+config/version="1.3.0"
 config/description="Aplicación de autoevaluación psicológica breve para medir el nivel de fatiga cognitiva. Proyecto Universidad Antonio Nariño."
 run/main_scene="res://src/core/main_app.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")

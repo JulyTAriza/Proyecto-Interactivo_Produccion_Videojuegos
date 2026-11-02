@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" path="res://src/scenes/history/history_panel.gd" id="1"]
 [ext_resource type="PackedScene" path="res://src/components/navigation/button_nav.tscn" id="2"]
+[ext_resource type="Theme" path="res://src/assets/ui/ui_theme.tres" id="theme"]
+[ext_resource type="Texture2D" path="res://src/assets/icons/icon_back.svg" id="ico_back"]
 
 [node name="HistoryPanel" type="Control"]
 layout_mode = 3
@@ -11,6 +13,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1")
+theme = ExtResource("theme")
 
 [node name="Margin" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -35,14 +38,14 @@ theme_override_constants/separation = 10
 
 [node name="LblTitulo" type="Label" parent="Margin/Scroll/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
 text = "Historial de Evaluaciones"
+theme_type_variation = &"TituloLabel"
 
 [node name="LblSubtitulo" type="Label" parent="Margin/Scroll/VBoxContainer"]
 layout_mode = 2
 autowrap_mode = 3
-theme_override_colors/font_color = Color(0.78, 0.8, 0.85, 1)
 text = "Estos resultados se cargan desde disco (user://fatiga_historial.json) y persisten aunque cierres la aplicación."
+theme_type_variation = &"SecundarioLabel"
 
 [node name="HSeparator1" type="HSeparator" parent="Margin/Scroll/VBoxContainer"]
 layout_mode = 2
@@ -50,8 +53,8 @@ layout_mode = 2
 [node name="LblVacio" type="Label" parent="Margin/Scroll/VBoxContainer"]
 layout_mode = 2
 autowrap_mode = 3
-theme_override_colors/font_color = Color(0.55, 0.58, 0.63, 1)
 text = "Aún no has guardado ninguna evaluación. Ve a \"Iniciar Evaluación\" y presiona \"Finalizar y Guardar Evaluación\" para ver tu primer registro aquí."
+theme_type_variation = &"SecundarioLabel"
 
 [node name="ListaRegistros" type="VBoxContainer" parent="Margin/Scroll/VBoxContainer"]
 layout_mode = 2
@@ -66,3 +69,6 @@ size_flags_horizontal = 0
 text = "Volver al Menú"
 target_scene = "res://src/scenes/menu/menu_panel.tscn"
 discard_previous = true
+grab_initial_focus = true
+
+icon = ExtResource("ico_back")

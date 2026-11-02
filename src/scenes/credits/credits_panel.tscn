@@ -1,6 +1,8 @@
 [gd_scene load_steps=2 format=3]
 
 [ext_resource type="PackedScene" path="res://src/components/navigation/button_nav.tscn" id="1"]
+[ext_resource type="Theme" path="res://src/assets/ui/ui_theme.tres" id="theme"]
+[ext_resource type="Texture2D" path="res://src/assets/icons/icon_back.svg" id="ico_back"]
 
 [node name="CreditsPanel" type="Control"]
 layout_mode = 3
@@ -9,6 +11,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("theme")
 
 [node name="Center" type="CenterContainer" parent="."]
 layout_mode = 1
@@ -69,3 +72,6 @@ layout_mode = 2
 text = "Volver al Menú"
 target_scene = "res://src/scenes/menu/menu_panel.tscn"
 discard_previous = true
+grab_initial_focus = true
+
+icon = ExtResource("ico_back")

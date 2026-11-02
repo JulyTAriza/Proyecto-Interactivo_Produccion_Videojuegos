@@ -18,13 +18,14 @@ extends Control
 @onready var lbl_seleccion: Label = $Margin/Scroll/VBox/LblSeleccion
 @onready var lbl_cupones: Label = $Margin/Scroll/VBox/LblCupones
 @onready var btn_factura: Button = $Margin/Scroll/VBox/HBoxBotones/BtnFactura
+@onready var btn_vaciar: Button = $Margin/Scroll/VBox/HBoxBotones/BtnVaciar
 
 func _ready() -> void:
 	for plan_id: String in botones_plan.keys():
 		var boton: Button = botones_plan[plan_id]
-		var plan: Dictionary = GlobalManager.PLANES_DESCANSO[plan_id]
-		boton.text = "%s  -  $%s\n%s" % [plan["nombre"], FormatUtil.pesos(int(plan["precio"])), plan["detalle"]]
+		boton.text = _texto_plan(plan_id, false)
 		boton.pressed.connect(_on_plan_pressed.bind(plan_id))
+	btn_vaciar.pressed.connect(GlobalManager.clear_purchase)
 
 	EventBus.purchase_updated.connect(_on_purchase_updated)
 	EventBus.coupons_changed.connect(_on_coupons_changed)
@@ -32,16 +33,27 @@ func _ready() -> void:
 	EventBus.coupons_requested.emit()
 	(botones_plan["pausa_activa"] as Button).grab_focus.call_deferred()
 
+func _texto_plan(plan_id: String, elegido: bool) -> String:
+	var plan: Dictionary = GlobalManager.PLANES_DESCANSO[plan_id]
+	var marca: String = "[ELEGIDO]  " if elegido else ""
+	return "%s%s  -  $%s\n%s" % [marca, plan["nombre"], FormatUtil.pesos(int(plan["precio"])), plan["detalle"]]
+
 func _on_plan_pressed(plan_id: String) -> void:
 	EventBus.plan_selected.emit(plan_id)
 
 func _on_purchase_updated(compra: Dictionary) -> void:
 	var plan_id: String = str(compra.get("plan_id", ""))
 	for id: String in botones_plan.keys():
-		(botones_plan[id] as Button).button_pressed = (id == plan_id)
+		var boton: Button = botones_plan[id]
+		boton.set_pressed_no_signal(id == plan_id)
+		# Accesibilidad: la selección se indica también con TEXTO (no solo
+		# con el color del estado Pressed del Theme).
+		boton.text = _texto_plan(id, id == plan_id)
+	btn_vaciar.disabled = plan_id.is_empty()
 	if plan_id.is_empty():
 		lbl_seleccion.text = "Aún no has elegido un plan."
 		btn_factura.disabled = true
+		_actualizar_cupon(0)
 		return
 	var subtotal: int = int(compra.get("subtotal", 0))
 	lbl_seleccion.text = "Plan elegido: %s  ·  Subtotal: $%s" % [GlobalManager.PLANES_DESCANSO[plan_id]["nombre"], FormatUtil.pesos(subtotal)]

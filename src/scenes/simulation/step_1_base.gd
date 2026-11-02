@@ -77,6 +77,7 @@ func _ready() -> void:
 
 	EventBus.total_changed.connect(_on_total_changed)
 	EventBus.total_requested.emit()
+	btn_estudiante.grab_focus.call_deferred()
 
 # ---------------------------------------------------------------------------
 # Entradas del usuario — cada una respeta el estado actual antes de actuar

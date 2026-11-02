@@ -105,6 +105,11 @@ func _jugar(comprar: bool) -> void:
 	_check(GlobalManager.coupons.size() == cupones_iniciales, "El cupón aplicado se consumió")
 	_check(_cupones_en_disco() == cupones_iniciales, "save_data.json refleja el consumo")
 	_check(GlobalManager.purchases.size() > 0, "La compra quedó registrada")
+	if "pop_up_confirm" in factura:
+		_check(factura.pop_up_confirm.visible, "Se muestra PurchaseSuccessPopup tras confirmar")
+		_presionar(factura.btn_continuar)
+		await _frames(5)
+		_check(_escena_actual().name == "MenuPanel", "Continuar regresa al menú principal")
 	_log("RESULTADO_CUPONES=%d" % GlobalManager.coupons.size())
 
 func _verificar(esperados: int) -> void:

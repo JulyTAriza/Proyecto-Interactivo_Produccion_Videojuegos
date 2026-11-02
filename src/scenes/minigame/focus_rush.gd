@@ -28,6 +28,11 @@ const Kind = FocusRushRules.StimulusKind
 
 const VELOCIDAD_JUGADOR: float = 520.0
 
+const ICONO_JUGAR: Texture2D = preload("res://src/assets/icons/icon_play.svg")
+const ICONO_VOLVER: Texture2D = preload("res://src/assets/icons/icon_back.svg")
+const ICONO_CUPON: Texture2D = preload("res://src/assets/icons/icon_coupon.svg")
+const ICONO_SALIR: Texture2D = preload("res://src/assets/icons/icon_exit.svg")
+
 @onready var play_area: Control = $Margin/VBox/PlayArea
 @onready var lbl_puntos: Label = $Margin/VBox/HUD/LblPuntos
 @onready var lbl_tiempo: Label = $Margin/VBox/HUD/LblTiempo
@@ -316,6 +321,15 @@ func _mostrar_overlay(titulo: String, texto: String, primario: String, secundari
 	lbl_overlay_texto.text = texto
 	btn_primario.text = primario
 	btn_secundario.text = secundario
+	# Iconografía de apoyo según la acción que representa cada botón.
+	btn_primario.icon = ICONO_CUPON if current_state == State.VICTORIA else ICONO_JUGAR
+	match current_state:
+		State.VICTORIA:
+			btn_secundario.icon = ICONO_JUGAR
+		State.PAUSADO:
+			btn_secundario.icon = ICONO_SALIR
+		_:
+			btn_secundario.icon = ICONO_VOLVER
 	btn_primario.grab_focus.call_deferred()
 
 func _flotante(texto: String, pos: Vector2, color: Color) -> void:
