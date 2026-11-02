@@ -1,0 +1,69 @@
+== Ejecución 1: ganar un cupón y cerrar sin gastarlo
+SIS> Cupones al iniciar: 0
+SIS> [OK]   Se abrió el minijuego (escena actual: FocusRush)
+SIS> [OK]   Inicia la cuenta regresiva
+SIS> Intento 1 terminó en VICTORIA con 200 puntos, 3 vidas, 22.5 s (frames=1550)
+SIS> [OK]   El bot logró ganar una partida
+SIS> [OK]   El cupón ganado entró a la colección
+SIS> [OK]   El cupón ganado quedó en user://save_data.json
+SIS> Cupón ganado: { "value": 5000, "minimum_purchase": 20000, "id": "CUP-1793633966-3659", "code": "ENFOQUE-5000", "origin": "Enfoque Rush (3 estrellas, 200 pts)", "obtained_at": "2026-11-02T10:39:26" }
+SIS> RESULTADO_CUPONES=1
+SIS> ==== PASA (0 falla(s)) ====
+== Ejecución 2: reabrir -> el cupón debe seguir ahí (1)
+SIS> Cupones cargados al reiniciar: 1 (esperados: 1)
+SIS> [OK]   La colección persistida se restauró al iniciar
+SIS> ==== PASA (0 falla(s)) ====
+== Ejecución 3: ganar otro cupón y gastar el mejor en la factura de planes
+SIS> Cupones al iniciar: 1
+SIS> [OK]   Se abrió el minijuego (escena actual: FocusRush)
+SIS> [OK]   Inicia la cuenta regresiva
+SIS> Intento 1 terminó en VICTORIA con 210 puntos, 3 vidas, 26.7 s (frames=1803)
+SIS> [OK]   El bot logró ganar una partida
+SIS> [OK]   El cupón ganado entró a la colección
+SIS> [OK]   El cupón ganado quedó en user://save_data.json
+SIS> Cupón ganado: { "value": 5000, "minimum_purchase": 20000, "id": "CUP-1793633967-1910", "code": "ENFOQUE-5000", "origin": "Enfoque Rush (3 estrellas, 210 pts)", "obtained_at": "2026-11-02T10:39:27" }
+SIS> [OK]   Se muestra la pantalla del cupón
+SIS> [OK]   Se abrió la tienda
+SIS> [OK]   Subtotal del plan = 25.000
+SIS> [OK]   El botón de factura se habilitó
+SIS> [OK]   Se abrió la factura
+SIS> [OK]   Total mostrado $20.000 == esperado $20.000
+SIS> [OK]   El cupón aplicado se consumió
+SIS> [OK]   save_data.json refleja el consumo
+SIS> [OK]   La compra quedó registrada
+SIS> [OK]   Se muestra PurchaseSuccessPopup tras confirmar
+SIS> [OK]   Continuar regresa al menú principal
+SIS> RESULTADO_CUPONES=1
+SIS> ==== PASA (0 falla(s)) ====
+== Ejecución 4: reabrir -> el cupón consumido NO debe reaparecer (1)
+SIS> Cupones cargados al reiniciar: 1 (esperados: 1)
+SIS> [OK]   La colección persistida se restauró al iniciar
+SIS> ==== PASA (0 falla(s)) ====
+== Ejecución 5: ganar cupón y comprar un Kit Anti-Fatiga (Lab 9)
+SIS> Cupones al iniciar: 1
+SIS> [OK]   Se abrió el minijuego (escena actual: FocusRush)
+SIS> [OK]   Inicia la cuenta regresiva
+SIS> Intento 1 terminó en VICTORIA con 200 puntos, 3 vidas, 25.9 s (frames=1757)
+SIS> [OK]   El bot logró ganar una partida
+SIS> [OK]   El cupón ganado entró a la colección
+SIS> [OK]   El cupón ganado quedó en user://save_data.json
+SIS> Cupón ganado: { "value": 5000, "minimum_purchase": 20000, "id": "CUP-1793633968-1174", "code": "ENFOQUE-5000", "origin": "Enfoque Rush (3 estrellas, 200 pts)", "obtained_at": "2026-11-02T10:39:28" }
+SIS> [OK]   Se abrió el armador de kit
+SIS> [OK]   Se generó una tarjeta por recurso del catálogo (9)
+SIS> [OK]   Subtotal del kit = $23.500
+SIS> [OK]   Elegir otra bebida reemplaza la sección
+SIS> [OK]   La UI muestra el subtotal recalculado (Subtotal: $22.500)
+SIS> [OK]   Quitar vacía la sección snack
+SIS> [OK]   Se abrió la factura interactiva
+SIS> [OK]   La factura tiene 3 líneas generadas desde recursos
+SIS> [OK]   Total de la factura $17.500 == $17.500
+SIS> [OK]   PurchaseSuccessPopup visible tras confirmar el kit
+SIS> [OK]   El cupón aplicado al kit se consumió
+SIS> [OK]   El kit se vació después de comprar
+SIS> RESULTADO_CUPONES=1
+SIS> ==== PASA (0 falla(s)) ====
+== Ejecución 6: reabrir -> estado de cupones tras la compra del kit (1)
+SIS> Cupones cargados al reiniciar: 1 (esperados: 1)
+SIS> [OK]   La colección persistida se restauró al iniciar
+SIS> ==== PASA (0 falla(s)) ====
+SIS-01 completo: PASA

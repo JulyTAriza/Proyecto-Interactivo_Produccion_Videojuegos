@@ -1,0 +1,15 @@
+Par de colores                                    Relación  AA(4.5:1)
+Texto principal / fondo de la app                   17.28:1  CUMPLE
+Texto secundario / fondo de la app                  12.75:1  CUMPLE
+Texto principal / panel                             15.06:1  CUMPLE
+Texto secundario / panel                            11.11:1  CUMPLE
+Acento cian (títulos de sección) / fondo            11.94:1  CUMPLE
+Acento amarillo (puntos, sección) / fondo           13.13:1  CUMPLE
+Botón Normal: texto / fondo                         12.91:1  CUMPLE
+Botón Hover: texto / fondo                           9.74:1  CUMPLE
+Botón Pressed: texto / fondo                         7.19:1  CUMPLE
+Botón Disabled: texto / fondo                        6.55:1  CUMPLE
+Tarjeta de cupón: texto / fondo amarillo            13.10:1  CUMPLE
+Popup éxito: título verde / panel                    8.75:1  CUMPLE
+
+12/12 pares cumplen AA.

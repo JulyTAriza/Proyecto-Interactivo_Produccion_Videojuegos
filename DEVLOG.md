@@ -452,3 +452,46 @@ El kit se compone desde datos, la UI se genera sola y la compra consume cupones 
 - **Crecimiento sin tocar código:** un nuevo `.tres` en el catálogo aparece en la tienda y la factura.
 - **Aporte del EventBus:** la factura del kit usa la misma API de cupones (`get_best_coupon`,
   `register_purchase`) que la tienda de planes: el sistema de cupones no tuvo que cambiar.
+
+## [2026-11-02] - Laboratorio 10: Depuración, Pruebas Unitarias y Aseguramiento de Calidad
+
+**Autor:** July Tatiana Ariza
+
+### Actividades Realizadas
+- Sesión de depuración con breakpoints en `GlobalManager.load_coupons()` (línea 372) y
+  `get_best_coupon()` (línea 312): pila de llamadas, variables locales y paso a paso
+  (`registro_depuracion.md`).
+- Instalación y activación de **GdUnit4 6.2.3** (`addons/gdUnit4`, habilitado en `project.godot`).
+- `tests/test_global_manager.gd` (`GdUnitTestSuite`) con los 3 casos de la guía (`assert_object`,
+  `assert_bool`) y 8 casos límite adicionales (`assert_int`).
+- Reto autónomo: `test_kit_subtotal.gd` (subtotal del kit desde Resources), `test_focus_rush_rules.gd`
+  (FSM, combos, estrellas, cupón) y `test_focus_rush_scene.gd` (escena real con `scene_runner`).
+- Integración INT-01: `test_coupon_event_bus_integration.gd` con los Autoloads reales.
+- `TEST_REPORT.md` con UNI-01, INT-01 y SIS-01; resultado: **29/29 PASA** y SIS-01 PASA.
+- 5 incidencias documentadas en `doc/qa/ISSUES.md` y script `tools/create_github_issues.sh` para
+  publicarlas y cerrarlas en GitHub Issues con su solución.
+- Preparación de la Release `v0.9.0-beta` (`doc/RELEASE_v0.9.0-beta.md`, `tools/publicar_github.sh`).
+
+### Desafíos y Soluciones
+* Desafío: GdUnit4 se niega a correr en modo headless. Solución: `--ignoreHeadlessMode`; las pruebas
+  no dependen de eventos de entrada reales (la escena se maneja por su API/FSM).
+* Desafío: las pruebas de integración podían borrar los cupones reales. Solución: `save_path` es una
+  variable que las pruebas redirigen a un archivo temporal y restauran en `after_test()`.
+* Desafío: un defecto (abandono con mensaje de "sin vidas") no se veía jugando normalmente.
+  Solución: se escribió primero la prueba de escena, falló, se corrigió y pasó.
+
+### Estado Final
+Versión Beta estable: 29 pruebas automatizadas en verde, flujo completo validado en escritorio y Web,
+5 defectos corregidos con trazabilidad.
+
+### Retrospectiva
+1. **Error más difícil de detectar con breakpoints:** los números flotantes de JSON en `purchases`;
+   con `print()` pasa inadvertido y solo al inspeccionar `datos` en `lv` se vio `25000.0`.
+2. **Ventaja de GdUnit4 frente a probar a mano:** 29 casos en ~0.3 s cada vez que se cambia el código;
+   probar a mano el caso "subtotal igual al mínimo" o "abandonar desde pausa" exige preparar el estado
+   cada vez y es fácil olvidarlo.
+3. **Unitaria vs. integración vía EventBus:** la unitaria instancia `GlobalManager` aislado y llama sus
+   métodos; la de integración emite la señal real y verifica que el Autoload reaccione, persista y
+   notifique a otros suscriptores.
+4. **Aporte de GitHub Issues:** cada defecto quedó con pasos, causa, solución y prueba de regresión, lo
+   que permitió cerrar la Beta sabiendo qué se corrigió y qué queda pendiente.

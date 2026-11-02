@@ -16,12 +16,16 @@ Prioridades: **P1** imprescindible para la Beta · **P2** deseable para la Beta 
 - [x] Lab 9 — `WellnessItemData` + `WellnessDatabase` + catálogo `.tres` en `GlobalManager`.
 - [x] Lab 9 — Kit Anti-Fatiga con UI auto-poblada, composición por secciones y Tweens.
 - [x] Lab 9 — Factura interactiva con cupones persistentes y ADR-006.
+- [x] Lab 10 — Sesión de depuración con breakpoints (`registro_depuracion.md`).
+- [x] Lab 10 — Suite GdUnit4 (29 casos en verde) y prueba de sistema SIS-01.
+- [x] Lab 10 — Issues #1–#5 corregidos (emoji Web, floats de JSON en cupones y compras, foco recortado, mensaje de abandono).
 
 ## Pendiente para la Beta (priorizado)
 | Prioridad | Tarea | Origen |
 |---|---|---|
 | P1 | Completar la prueba con usuario real y trasladar sus hallazgos aquí | Lab 8 |
-| P1 | Suite de pruebas automatizadas (GdUnit4) sobre cupones y reglas del minijuego | Lab 10 |
+| P1 | Publicar los Issues y la Release `v0.9.0-beta` en GitHub (`tools/create_github_issues.sh`, `tools/publicar_github.sh`) | Lab 10 |
+| P2 | Ejecutar la suite GdUnit4 en GitHub Actions en cada push | Lab 10 |
 | P2 | Que el alivio del kit comprado reduzca el índice de la evaluación de fatiga | Lab 9 |
 | P2 | Opción de "texto grande" en Configuración (escala de fuente del Theme) | Heurística Lab 8 |
 | P2 | Sonido de retroalimentación al atrapar ideas / distractores (con opción de silenciar) | Heurística Lab 8 |

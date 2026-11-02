@@ -376,7 +376,19 @@ func load_coupons() -> void:
 				coupons.append(normalizado)
 	var compras: Variant = (datos as Dictionary).get("purchases", [])
 	if typeof(compras) == TYPE_ARRAY:
-		purchases = compras
+		for compra in compras:
+			if typeof(compra) == TYPE_DICTIONARY:
+				purchases.append(_normalizar_compra(compra))
+
+## Issue #5 (hallado con breakpoints): las compras también volvían de JSON
+## con montos flotantes (25000.0) y el cupón interno sin normalizar.
+func _normalizar_compra(compra: Dictionary) -> Dictionary:
+	var c: Dictionary = compra.duplicate(true)
+	for campo in ["subtotal", "discount", "total"]:
+		c[campo] = int(c.get(campo, 0))
+	var cupon: Variant = c.get("coupon", {})
+	c["coupon"] = _normalizar_cupon(cupon) if typeof(cupon) == TYPE_DICTIONARY and not (cupon as Dictionary).is_empty() else {}
+	return c
 
 ## JSON no distingue enteros de flotantes: al leer, 2000 vuelve como 2000.0.
 ## Se normalizan los campos numéricos a int para que las comparaciones,

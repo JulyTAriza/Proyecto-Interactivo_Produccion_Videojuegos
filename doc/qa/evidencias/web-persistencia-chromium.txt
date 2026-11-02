@@ -1,0 +1,24 @@
+== Web 1: ganar cupón y cerrar el navegador sin gastarlo
+    SIS> Cupones al iniciar: 0
+    SIS> Intento 1 terminó en VICTORIA con 200 puntos, 3 vidas, 29.8 s (frames=646)
+    SIS> RESULTADO_CUPONES=1
+    SIS> ==== PASA (0 falla(s)) ====
+== Web 2: reabrir navegador -> deben cargarse 1 cupón(es)
+    SIS> Cupones cargados al reiniciar: 1 (esperados: 1)
+    SIS> ==== PASA (0 falla(s)) ====
+== Web 3: ganar otro y consumir el mejor en la factura
+    SIS> Cupones al iniciar: 1
+    SIS> Intento 1 terminó en VICTORIA con 200 puntos, 3 vidas, 27.5 s (frames=610)
+    SIS> RESULTADO_CUPONES=1
+    SIS> ==== PASA (0 falla(s)) ====
+== Web 4: reabrir -> el consumido no reaparece (1 restante)
+    SIS> Cupones cargados al reiniciar: 1 (esperados: 1)
+    SIS> ==== PASA (0 falla(s)) ====
+== Web 5: ganar y comprar un Kit Anti-Fatiga (UI auto-poblada)
+    SIS> Cupones al iniciar: 1
+    SIS> Intento 1 terminó en VICTORIA con 200 puntos, 3 vidas, 15.4 s (frames=350)
+    SIS> RESULTADO_CUPONES=1
+    SIS> ==== PASA (0 falla(s)) ====
+== Web 6: reabrir -> 1 cupón(es)
+    SIS> Cupones cargados al reiniciar: 1 (esperados: 1)
+    SIS> ==== PASA (0 falla(s)) ====

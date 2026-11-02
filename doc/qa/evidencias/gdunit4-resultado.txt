@@ -1,0 +1,43 @@
+Run Test Suite: res://tests/test_global_manager.gd
+  res://tests/test_global_manager.gd > test_returns_coupon_when_subtotal_is_sufficient PASSED 4ms
+  res://tests/test_global_manager.gd > test_returns_empty_when_no_coupon_valid PASSED 2ms
+  res://tests/test_global_manager.gd > test_selects_highest_value_coupon PASSED 2ms
+  res://tests/test_global_manager.gd > test_coupon_applies_when_subtotal_equals_minimum PASSED 2ms
+  res://tests/test_global_manager.gd > test_ignores_higher_coupon_that_is_not_reachable PASSED 2ms
+  res://tests/test_global_manager.gd > test_apply_coupon_never_returns_negative_total PASSED 3ms
+  res://tests/test_global_manager.gd > test_apply_coupon_respects_minimum_purchase PASSED 2ms
+  res://tests/test_global_manager.gd > test_save_and_load_round_trip_keeps_int_values PASSED 2ms
+  res://tests/test_global_manager.gd > test_load_normalizes_purchase_numbers PASSED 2ms
+  res://tests/test_global_manager.gd > test_load_ignores_corrupt_file PASSED 2ms
+  res://tests/test_global_manager.gd > test_add_coupon_rejects_invalid_values PASSED 2ms
+Statistics: 11 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 58ms
+Run Test Suite: res://tests/test_kit_subtotal.gd
+  res://tests/test_kit_subtotal.gd > test_catalog_has_valid_resources PASSED 3ms
+  res://tests/test_kit_subtotal.gd > test_full_kit_subtotal_is_sum_of_resource_prices PASSED 2ms
+  res://tests/test_kit_subtotal.gd > test_empty_kit_subtotal_is_zero PASSED 2ms
+  res://tests/test_kit_subtotal.gd > test_unknown_ids_do_not_add_to_subtotal PASSED 2ms
+  res://tests/test_kit_subtotal.gd > test_kit_relief_is_sum_of_resource_relief PASSED 2ms
+  res://tests/test_kit_subtotal.gd > test_cheapest_full_kit_vs_coupon_minimum PASSED 2ms
+Statistics: 6 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 38ms
+Run Test Suite: res://tests/test_coupon_event_bus_integration.gd
+  res://tests/test_coupon_event_bus_integration.gd > test_coupon_obtained_signal_persists_coupon PASSED 4ms
+  res://tests/test_coupon_event_bus_integration.gd > test_register_purchase_consumes_coupon_and_updates_file PASSED 4ms
+  res://tests/test_coupon_event_bus_integration.gd > test_kit_selection_through_event_bus PASSED 3ms
+Statistics: 3 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 33ms
+Run Test Suite: res://tests/test_focus_rush_rules.gd
+  res://tests/test_focus_rush_rules.gd > test_valid_fsm_transitions PASSED 3ms
+  res://tests/test_focus_rush_rules.gd > test_invalid_fsm_transitions_are_rejected PASSED 2ms
+  res://tests/test_focus_rush_rules.gd > test_combo_multiplier_boundaries PASSED 2ms
+  res://tests/test_focus_rush_rules.gd > test_stars_depend_on_goal_time_and_lives PASSED 2ms
+  res://tests/test_focus_rush_rules.gd > test_coupon_tiers PASSED 2ms
+  res://tests/test_focus_rush_rules.gd > test_difficulty_is_progressive_and_bounded PASSED 2ms
+Statistics: 6 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 37ms
+Run Test Suite: res://tests/test_focus_rush_scene.gd
+  res://tests/test_focus_rush_scene.gd > test_abandon_from_pause_shows_abandon_message PASSED 41ms
+  res://tests/test_focus_rush_scene.gd > test_reaching_goal_wins_and_grants_one_coupon PASSED 46ms
+  res://tests/test_focus_rush_scene.gd > test_running_out_of_time_is_a_defeat_without_coupon PASSED 35ms
+Statistics: 3 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans | PASSED 138ms
+Overall Summary: 29 test cases | 0 errors | 0 failures | 0 flaky | 0 skipped | 0 orphans |
+Executed test suites: (5/5)
+Executed test cases : (29/29)
+Exit code: 0

@@ -5,27 +5,49 @@
 ## 📝 Descripción del Proyecto
 Este repositorio aloja **Detector de Fatiga Cognitiva**, una aplicación interactiva de autoevaluación psicológica desarrollada durante el semestre académico 2026-2. El usuario responde un breve cuestionario de varias preguntas (escala 0-10) sobre concentración, cansancio mental y errores por falta de atención; la aplicación calcula un índice total y lo clasifica en un nivel de alerta (Bajo, Moderado, Alto o Crítico). El sistema está configurado bajo buenas prácticas de ingeniería de software en Godot Engine, con navegación completamente desacoplada mediante un Event Bus global.
 
-## 📂 Estructura de Directorios del Repositorio
-A partir del Laboratorio 2, el proyecto sigue una arquitectura modular con
-co-localización estricta (cada escena vive junto a su script controlador):
+## 🎮 Cómo se juega (Sprints 2 y 3)
+1. **Enfoque Rush** (minijuego): mueve la lente con flechas / A-D / mouse. Atrapa las ideas (círculo
+   amarillo), esquiva los distractores (rombo rojo) y recoge pausas activas (hexágono verde). Llega a
+   200 puntos en 45 s para ganar un **cupón** (1 a 3 estrellas según tiempo y vidas). Esc o P pausa.
+2. **Tienda de Bienestar**: compra un plan de descanso; la factura aplica tu mejor cupón.
+3. **Arma tu Kit Anti-Fatiga**: elige bebida, snack y actividad de un catálogo generado desde
+   `Resource`; la factura del kit también acepta cupones.
+4. Los cupones y las compras se guardan en `user://save_data.json` (IndexedDB en la versión Web).
 
+## 📂 Estructura de Directorios del Repositorio
 ```
 src/
-├── core/                     <- Lógica global del sistema
-│   ├── event_bus.gd          <- Autoload "EventBus" (Observer/Singleton)
-│   ├── global_manager.gd     <- Autoload "GlobalManager" (estado global)
-│   ├── main_app.tscn         <- Escena principal (orquestador)
-│   └── main_app.gd
+├── core/            event_bus.gd, global_manager.gd (cupones, compras, kit), main_app, format_util.gd
+├── data/            wellness_item_data.gd, wellness_database.gd, items/*.tres, wellness_catalog.tres  (Lab 9)
 ├── scenes/
-│   ├── menu/                 <- Panel de menú principal
-│   ├── simulation/           <- Panel de simulación / evaluación (Paso 1)
-│   ├── config/                <- Panel de configuración (sin script propio)
-│   ├── credits/               <- Panel de créditos (sin script propio)
-│   └── history/                <- (Extra) Historial persistente de evaluaciones
-├── components/
-│   └── navigation/
-│       └── button_nav.tscn    <- Componente reutilizable de navegación
-└── assets/                    <- Recursos multimedia (audio, UI, texturas)
+│   ├── menu/        Menú principal (fondo TextureRect, 3 secciones)
+│   ├── simulation/  Evaluación de fatiga (FSM, Lab 6)
+│   ├── history/     Historial persistente de evaluaciones
+│   ├── minigame/    Enfoque Rush: focus_rush.tscn, focus_play_area.gd, focus_rush_rules.gd  (Lab 7)
+│   ├── coupon/      coupon_event.tscn: cupón obtenido / mis cupones  (Lab 7)
+│   ├── shop/        buy_panel, purchase_invoice (Lab 7-8) · *_interactive (Lab 9)
+│   ├── config/  credits/
+├── components/      navigation/button_nav · kit/kit_composition  (Lab 9)
+└── assets/          ui/ui_theme.tres (Lab 8), fonts/, icons/, items/
+tests/               Suites GdUnit4 (Lab 10)
+tools/               Prueba de sistema, sesión de depuración, contraste WCAG, scripts de GitHub
+doc/                 ADR-001..005, ACCESIBILIDAD.md, PUBLICACION_ITCH.md, qa/ (issues y evidencias)
+```
+
+## 📚 Entregables por laboratorio
+| Lab | Rama / etiqueta | Documentos |
+|---|---|---|
+| 7 Vertical Slice + Web | `lab-7` | DEVLOG, `doc/PUBLICACION_ITCH.md` |
+| 8 UI/UX y accesibilidad | `lab-8` · `lab-8-final` | USER_FEEDBACK.md, BACKLOG.md, `doc/ACCESIBILIDAD.md` |
+| 9 Resources y UI dinámica | `lab-9` · `lab-9-final` | ADR-006.md |
+| 10 Depuración y QA | `lab-10` · `lab-10-final` · `v0.9.0-beta` | registro_depuracion.md, TEST_REPORT.md, `doc/qa/ISSUES.md` |
+
+## 🧪 Pruebas
+```bash
+export GODOT_BIN=/ruta/a/godot
+addons/gdUnit4/runtest.sh --headless --ignoreHeadlessMode -a res://tests   # 29 pruebas GdUnit4
+tools/run_system_test.sh                                                    # prueba de sistema SIS-01
+python3 tools/contrast_check.py                                             # contraste WCAG del Theme
 ```
 
 ## 🧩 Arquitectura de Navegación Desacoplada
@@ -68,7 +90,9 @@ Consulta también [`CHANGELOG.md`](CHANGELOG.md) para el historial de
 versiones y [`DEVLOG.md`](DEVLOG.md) para la bitácora técnica completa.
 
 ## ⚙️ Tecnologías Utilizadas
-* **Engine:** Godot Engine 4.x (Renderizador: *Compatibility* para portabilidad web)
+* **Engine:** Godot Engine 4.7.1 (Renderizador: *Compatibility* para portabilidad web)
+* **Pruebas:** GdUnit4 6.2.3
+* **Fuente:** Atkinson Hyperlegible (OFL)
 * **Lenguaje:** GDScript 2.0 (Tipado estricto)
 * **Versionamiento:** Git / GitHub para control de configuraciones
 ## 🎨 Personalización del Proyecto.

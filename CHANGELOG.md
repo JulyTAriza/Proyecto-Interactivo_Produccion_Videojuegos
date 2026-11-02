@@ -3,6 +3,17 @@
 Todas las novedades notables de este proyecto se documentan en este
 archivo. El formato está inspirado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/).
 
+## [1.5.0] - 2026-11-02 — Laboratorio 10: QA · publicada como Release `v0.9.0-beta`
+
+### Added
+- GdUnit4 6.2.3 (`addons/gdUnit4`) y 5 suites en `tests/` (29 casos).
+- `registro_depuracion.md`, `TEST_REPORT.md`, `doc/qa/ISSUES.md`, evidencias en `doc/qa/evidencias/`.
+- `tools/debug_session.tscn`, `tools/create_github_issues.sh`, `tools/publicar_github.sh`.
+
+### Fixed
+- #4 Mensaje incorrecto al abandonar una partida desde la pausa.
+- #5 Montos flotantes en las compras persistidas.
+
 ## [1.4.0] - 2026-11-01 — Laboratorio 9: datos con Resources y UI dinámica
 
 ### Added

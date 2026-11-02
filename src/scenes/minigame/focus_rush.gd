@@ -58,6 +58,9 @@ var spawn_timer: float = 0.0
 var countdown: float = 0.0
 var target_x: float = -1.0
 var last_coupon: Dictionary = {}
+## true cuando el jugador abandona desde la pausa (Issue #4: antes se
+## simulaba poniendo lives = 0 y el mensaje decía "perdiste las 3 vidas").
+var abandonada: bool = false
 var rng: RandomNumberGenerator = RandomNumberGenerator.new()
 
 func _ready() -> void:
@@ -134,7 +137,11 @@ func _enter_victoria() -> void:
 		"Ver mi cupón", "Jugar de nuevo")
 
 func _enter_derrota() -> void:
-	var motivo: String = "Perdiste las 3 vidas: los distractores ganaron esta vez." if lives <= 0 else "Se acabó el tiempo antes de llegar a la meta."
+	var motivo: String = "Se acabó el tiempo antes de llegar a la meta."
+	if abandonada:
+		motivo = "Abandonaste la partida."
+	elif lives <= 0:
+		motivo = "Perdiste las 3 vidas: los distractores ganaron esta vez."
 	_mostrar_overlay("Fin de la partida", "%s\n\nPuntos: %d de %d   ·   Racha máxima: %d\nNo se otorgó cupón. ¡Inténtalo otra vez!" % [motivo, score, FocusRushRules.META_PUNTOS, best_streak], "Reintentar", "Volver al menú")
 
 # ---------------------------------------------------------------------------
@@ -155,7 +162,7 @@ func _on_btn_secundario() -> void:
 		State.INSTRUCCIONES, State.DERROTA:
 			EventBus.navigation_requested.emit(MENU_SCENE_PATH, true)
 		State.PAUSADO:
-			lives = 0
+			abandonada = true
 			change_state(State.DERROTA)
 		State.VICTORIA:
 			change_state(State.CUENTA_REGRESIVA)
@@ -302,6 +309,7 @@ func _reiniciar_partida() -> void:
 	spawn_timer = 0.3
 	target_x = -1.0
 	last_coupon = {}
+	abandonada = false
 	play_area.stimuli = []
 	play_area.floaters = []
 	play_area.player_x = play_area.size.x / 2.0
