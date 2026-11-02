@@ -1,0 +1,8 @@
+# Godot 4+
+.godot/
+/android/
+# Export builds
+/build/
+*.tmp
+# GdUnit4 reports
+/reports/

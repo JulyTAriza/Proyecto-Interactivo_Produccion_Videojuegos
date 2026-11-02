@@ -244,3 +244,69 @@ anotada desde el Laboratorio 2.
   campos de estado que se actualicen con alta frecuencia.
 - Permitir borrar registros individuales del historial desde la propia
   pantalla `HistoryPanel`.
+
+## [2026-10-15] - Laboratorio 6: Máquina de Estado Finito y Animación Tween
+
+**Autor:** July Tatiana Ariza
+
+### Resumen
+Se modeló el flujo real de evaluación de `Step1Base` como una FSM de tres
+estados, en vez de dejarlo como una única acción de "guardar" sin
+distinción de momentos. Se agregó una animación Tween de confirmación
+asociada a la transición hacia el estado final.
+
+### Cambios realizados
+- `step_1_base.gd`: nuevo `enum EvaluationState { EN_EVALUACION, GUARDANDO, GUARDADA }`, con `change_state()` como única función que modifica `current_state`, validada contra `_is_transition_allowed()`.
+- Los botones de perfil base y de síntomas ahora verifican `current_state == EN_EVALUACION` antes de emitir cualquier señal al EventBus; quedan deshabilitados automáticamente mientras se guarda.
+- Nuevos nodos en `step_1_base.tscn`: `LblConfirmacion` (mensaje animado) y `BtnNuevaEvaluacion` (regresa a `EN_EVALUACION`).
+- Animación Tween (escala + opacidad, `TRANS_BACK`/`EASE_OUT`) sobre `LblConfirmacion`, disparada al entrar a `GUARDANDO` y que al terminar transiciona automáticamente a `GUARDADA`.
+- Diagrama de estados en `doc/diagrams/fsm-evaluacion.md` y justificación en `doc/adr/ADR-005-fsm-flujo-evaluacion.md`.
+
+### Problemas encontrados y solución
+- Decidir si el guardado real (`EventBus.evaluation_finalized.emit()`) debía dispararse al *entrar* a `GUARDANDO` o al *terminar* la animación. Se optó por dispararlo al entrar, para que el historial se actualice de inmediato y la animación sea puramente una confirmación visual, no una condición de la que dependa el guardado.
+- Evitar que el usuario pudiera presionar "Finalizar" dos veces seguidas antes de que la UI reaccionara: se resolvió deshabilitando los botones como parte de `_enter_guardando()`, antes incluso de iniciar la animación.
+
+### Próximos pasos
+- Evaluar una FSM similar para `HistoryPanel` si se agrega edición/borrado de registros individuales.
+- Considerar persistir también el estado de la FSM (por si el usuario cierra la app a mitad de la animación de confirmación — caso extremadamente improbable dada la duración de 0.4s, pero documentado como hipótesis).
+
+## [2026-10-15] - Laboratorio 7: Sprint Review 2 — Vertical Slice, Persistencia y Publicación Web
+
+**Autor:** July Tatiana Ariza
+
+### Resumen
+A diferencia de otros proyectos del curso, la persistencia de datos
+(`FileAccess` + JSON en `GlobalManager`) ya se había implementado en una
+entrega anterior (ver entrada del 2026-09-11 y `ADR-004-persistencia-historial.md`),
+adelantándose al requisito de este laboratorio. Esta entrada se enfoca en
+cerrar el Vertical Slice: validar el flujo completo, refinar detalles
+visuales pendientes, y publicar la versión Web en itch.io.
+
+### Actividades realizadas
+- Se confirmó que `estado_simulacion` y `historial_evaluaciones` se
+  guardan y cargan correctamente mediante `_guardar_estado()` /
+  `_cargar_estado()` y `_guardar_historial()` / `_cargar_historial()` en
+  `GlobalManager`, usando `user://fatiga_estado.json` y
+  `user://fatiga_historial.json`.
+- Se recorrió el flujo completo: Menú → Evaluación (con la nueva FSM del
+  Lab 6) → Guardar → Historial → Volver, confirmando que todo sigue
+  integrado tras los cambios recientes.
+- [COMPLETAR: qué ajuste visual adicional hiciste, si alguno, al revisar
+  distribución/legibilidad/consistencia entre pantallas]
+- Exportación del proyecto con el preset Web de Godot, con las cabeceras
+  de aislamiento de origen y la depuración desactivadas.
+- Publicación como juego HTML en itch.io.
+
+### Desafíos encontrados y soluciones
+[COMPLETAR: cualquier problema al exportar/publicar — por ejemplo,
+plantillas de exportación faltantes, el zip con carpeta anidada en vez
+de index.html en la raíz, o la necesidad de un servidor local para
+probar la build antes de subirla]
+
+### URL secreta de la publicación
+[COMPLETAR: pega aquí el link de itch.io después de publicar en modo Draft]
+
+### Estado final del Vertical Slice
+[COMPLETAR: confirma que probaste cerrar/reabrir tanto en escritorio
+como en la versión Web publicada, y que la persistencia (estado +
+historial) se mantiene en ambos casos]
