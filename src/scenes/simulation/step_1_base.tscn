@@ -36,7 +36,7 @@ theme_override_constants/separation = 14
 [node name="LblTitulo" type="Label" parent="Margin/Scroll/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 26
-text = "🧠 Evaluación de Fatiga Cognitiva"
+text = "Evaluación de Fatiga Cognitiva"
 
 [node name="LblInstruccion" type="Label" parent="Margin/Scroll/VBoxContainer"]
 layout_mode = 2
@@ -117,7 +117,7 @@ text = "Tu progreso se guarda automáticamente. Puedes cerrar la app y al volver
 
 [node name="BtnFinalizar" type="Button" parent="Margin/Scroll/VBoxContainer"]
 layout_mode = 2
-text = "✅ Finalizar y Guardar Evaluación"
+text = "Finalizar y Guardar Evaluación"
 
 [node name="LblConfirmacion" type="Label" parent="Margin/Scroll/VBoxContainer"]
 visible = false
@@ -125,7 +125,7 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 18
 theme_override_colors/font_color = Color(0.3, 0.9, 0.5, 1)
 horizontal_alignment = 1
-text = "✔ Evaluación guardada en tu historial"
+text = "Listo: evaluación guardada en tu historial"
 
 [node name="BtnNuevaEvaluacion" type="Button" parent="Margin/Scroll/VBoxContainer"]
 visible = false

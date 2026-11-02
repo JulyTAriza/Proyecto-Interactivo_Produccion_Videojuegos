@@ -36,7 +36,7 @@ theme_override_constants/separation = 10
 [node name="LblTitulo" type="Label" parent="Margin/Scroll/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
-text = "📖 Historial de Evaluaciones"
+text = "Historial de Evaluaciones"
 
 [node name="LblSubtitulo" type="Label" parent="Margin/Scroll/VBoxContainer"]
 layout_mode = 2

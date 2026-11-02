@@ -3,6 +3,28 @@
 Todas las novedades notables de este proyecto se documentan en este
 archivo. El formato está inspirado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/).
 
+## [1.2.0] - 2026-10-22 — Laboratorio 7: Vertical Slice y publicación Web
+
+### Added
+- Minijuego **Enfoque Rush** (`src/scenes/minigame/`) con FSM, dificultad
+  progresiva, pausa, victoria/derrota y cupones según desempeño.
+- Cupones persistentes en `GlobalManager` (`user://save_data.json`):
+  `save_coupons()`, `load_coupons()`, `add_coupon()`, `remove_coupon()`,
+  `get_best_coupon()`, `apply_coupon()`, `register_purchase()`.
+- Tienda de Bienestar (`buy_panel`), factura (`purchase_invoice`) y
+  pantalla de cupón (`coupon_event`).
+- Acciones de entrada `move_left`, `move_right`, `pause`.
+- Preset de exportación Web y guía `doc/PUBLICACION_ITCH.md`.
+- Prueba de sistema automatizada `tools/system_flow_runner.tscn` y
+  `tools/run_system_test.sh`.
+
+### Changed
+- Menú reorganizado por secciones; transición de fundido en `MainApp`;
+  volver al menú reinicia `navigation_history`.
+
+### Fixed
+- Emoji que en la versión Web se veían como cuadros vacíos.
+
 ## [1.1.0] - 2026-09-11 — Persistencia en disco y fix de layout (mejora adicional)
 
 > Esta versión va **más allá** del mínimo exigido por la rúbrica del

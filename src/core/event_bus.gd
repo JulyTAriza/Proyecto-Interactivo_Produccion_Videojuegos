@@ -5,11 +5,14 @@
 # Canal intermediario global que implementa el patrón Observer para
 # desacoplar por completo las escenas visuales de la lógica de navegación
 # y de la lógica de estado de la simulación. Ninguna escena conoce a otra
-# directamente ni conoce a GlobalManager: solo emiten y escuchan señales
-# tipadas a través de este nodo, registrado como Autoload bajo el
-# identificador "EventBus".
+# directamente: solo emiten y escuchan señales tipadas a través de este
+# nodo, registrado como Autoload bajo el identificador "EventBus".
 # ---------------------------------------------------------------------------
 extends Node
+
+# ===========================================================================
+# NAVEGACIÓN (Laboratorios 3-4)
+# ===========================================================================
 
 ## Se emite cuando cualquier panel (o instancia de ButtonNav) solicita
 ## navegar hacia otra escena. MainApp es el único suscriptor responsable
@@ -18,38 +21,55 @@ extends Node
 ## "regreso" y retira el último elemento del historial (.pop_back()).
 signal navigation_requested(target_scene: String, discard_previous: bool)
 
+# ===========================================================================
+# EVALUACIÓN DE FATIGA (Laboratorios 4-6)
+# ===========================================================================
+
 ## Se emite cuando el usuario selecciona un perfil/base de evaluación en
 ## Step1Base (por ejemplo: "estudiante", "profesional", "deportista").
-## Único suscriptor: GlobalManager.
 signal base_selected(base_name: String)
 
 ## Se emite cuando el usuario marca un síntoma/ítem adicional en Step1Base.
-## Único suscriptor: GlobalManager.
 signal item_added(item_id: String)
 
 ## Se emite cada vez que GlobalManager recalcula el índice total de fatiga.
-## Cualquier interfaz interesada (ej. el Label de Step1Base) se suscribe
-## de forma pasiva para refrescar su visualización.
 signal total_changed(new_total: int)
 
-## Se emite cuando una interfaz necesita conocer el total ACTUAL sin haber
-## provocado ningún cambio (por ejemplo, al cargar Step1Base y querer
-## mostrar de inmediato el valor persistido de una sesión anterior).
-## GlobalManager responde re-emitiendo "total_changed" con el valor vigente.
+## Petición explícita del total vigente (patrón petición/respuesta).
 signal total_requested
 
-## Se emite desde Step1Base cuando el usuario confirma que terminó de
-## responder y quiere guardar el resultado en el historial persistente.
-## GlobalManager registra el intento, lo guarda en disco y reinicia el
-## estado de la simulación para permitir una nueva evaluación.
+## El usuario confirma que terminó la evaluación y quiere guardarla.
 signal evaluation_finalized
 
-## Se emite cuando una interfaz (ej. HistoryPanel) necesita el historial
-## completo de evaluaciones guardadas. GlobalManager responde emitiendo
-## "history_updated" con el arreglo cargado desde disco.
+## Petición del historial completo de evaluaciones guardadas.
 signal history_requested
 
-## Se emite con el arreglo actualizado de evaluaciones guardadas, cada vez
-## que se solicita (history_requested) o que se agrega un nuevo registro
-## (evaluation_finalized).
+## Respuesta con el arreglo actualizado de evaluaciones guardadas.
 signal history_updated(historial: Array)
+
+# ===========================================================================
+# CUPONES Y COMPRAS (Laboratorio 7)
+# ===========================================================================
+
+## El minijuego "Enfoque Rush" emite esta señal cuando el jugador gana.
+## Único suscriptor con responsabilidad de estado: GlobalManager, que lo
+## agrega a la colección y lo persiste en user://save_data.json.
+signal coupon_obtained(coupon: Dictionary)
+
+## Se emite (desde GlobalManager) cada vez que la colección de cupones
+## cambia: al cargar, al obtener uno nuevo o al consumir uno en una compra.
+signal coupons_changed(coupons: Array)
+
+## Petición explícita de la colección actual de cupones.
+signal coupons_requested
+
+## La tienda de planes (BuyPanel) informa el plan elegido por el usuario.
+signal plan_selected(plan_id: String)
+
+## GlobalManager confirma la compra en curso (plan + subtotal).
+signal purchase_updated(purchase: Dictionary)
+
+## Se emite cuando una compra fue confirmada en cualquier factura.
+## summary = { "items": Array, "subtotal": int, "discount": int,
+##             "total": int, "coupon": Dictionary, "fecha": String }
+signal purchase_completed(summary: Dictionary)

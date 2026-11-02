@@ -1,0 +1,118 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/scenes/shop/purchase_invoice.gd" id="1"]
+[ext_resource type="PackedScene" path="res://src/components/navigation/button_nav.tscn" id="2"]
+
+[node name="PurchaseInvoice" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 24
+
+[node name="Scroll" type="ScrollContainer" parent="Margin"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="VBox" type="VBoxContainer" parent="Margin/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 14
+
+[node name="LblTitulo" type="Label" parent="Margin/Scroll/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Factura de compra"
+
+[node name="LblPlan" type="Label" parent="Margin/Scroll/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Plan"
+autowrap_mode = 3
+
+[node name="HSeparator1" type="HSeparator" parent="Margin/Scroll/VBox"]
+layout_mode = 2
+
+[node name="Grid" type="GridContainer" parent="Margin/Scroll/VBox"]
+layout_mode = 2
+theme_override_constants/h_separation = 40
+theme_override_constants/v_separation = 8
+columns = 2
+
+[node name="LblSubtotal" type="Label" parent="Margin/Scroll/VBox/Grid"]
+layout_mode = 2
+text = "Subtotal"
+
+[node name="LblSubtotalValor" type="Label" parent="Margin/Scroll/VBox/Grid"]
+layout_mode = 2
+text = "$0"
+horizontal_alignment = 2
+
+[node name="LblDescuento" type="Label" parent="Margin/Scroll/VBox/Grid"]
+layout_mode = 2
+text = "Descuento por cupón"
+
+[node name="LblDescuentoValor" type="Label" parent="Margin/Scroll/VBox/Grid"]
+layout_mode = 2
+text = "-$0"
+horizontal_alignment = 2
+
+[node name="LblTotal" type="Label" parent="Margin/Scroll/VBox/Grid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Total a pagar"
+
+[node name="LblTotalValor" type="Label" parent="Margin/Scroll/VBox/Grid"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.36, 0.87, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "$0"
+horizontal_alignment = 2
+
+[node name="ChkUsarCupon" type="CheckButton" parent="Margin/Scroll/VBox"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Usar mi mejor cupón"
+
+[node name="LblCoupon" type="Label" parent="Margin/Scroll/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.84, 0.9, 1)
+text = "Cupón"
+autowrap_mode = 3
+
+[node name="HSeparator2" type="HSeparator" parent="Margin/Scroll/VBox"]
+layout_mode = 2
+
+[node name="HBoxBotones" type="HBoxContainer" parent="Margin/Scroll/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="BtnConfirmar" type="Button" parent="Margin/Scroll/VBox/HBoxBotones"]
+layout_mode = 2
+text = "Confirmar compra"
+
+[node name="BtnVolver" parent="Margin/Scroll/VBox/HBoxBotones" instance=ExtResource("2")]
+layout_mode = 2
+text = "Volver a la tienda"
+target_scene = "res://src/scenes/shop/buy_panel.tscn"
+discard_previous = true
+
+[node name="BtnMenu" parent="Margin/Scroll/VBox/HBoxBotones" instance=ExtResource("2")]
+layout_mode = 2
+text = "Volver al menú"
+target_scene = "res://src/scenes/menu/menu_panel.tscn"
+discard_previous = true

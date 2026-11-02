@@ -34,7 +34,12 @@ func _on_navigation_requested(target_scene_path: String, discard_previous: bool)
 	print("MainApp: navegación solicitada hacia -> %s (discard_previous=%s)" % [target_scene_path, discard_previous])
 
 	# 1. Actualizar la pila de historial de navegación.
-	if discard_previous:
+	if target_scene_path == MENU_SCENE_PATH:
+		# Lab 7: volver al menú (desde cualquier profundidad, p. ej. tras
+		# pagar en la factura) reinicia la pila, evitando que el historial
+		# acumule entradas huérfanas de flujos ya terminados.
+		navigation_history = [MENU_SCENE_PATH]
+	elif discard_previous:
 		# Caso típico de los botones de "Volver": se retira el último
 		# elemento registrado antes de instanciar el panel de destino.
 		if navigation_history.size() > 0:
@@ -59,3 +64,9 @@ func _on_navigation_requested(target_scene_path: String, discard_previous: bool)
 	var new_scene_instance: Node = new_scene_resource.instantiate()
 	scene_container.add_child(new_scene_instance)
 	current_scene = new_scene_instance
+
+	# 4. Transición suave (fade-in) de la nueva pantalla.
+	if new_scene_instance is CanvasItem:
+		var visual: CanvasItem = new_scene_instance
+		visual.modulate.a = 0.0
+		visual.create_tween().tween_property(visual, "modulate:a", 1.0, 0.18)

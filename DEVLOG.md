@@ -270,43 +270,100 @@ asociada a la transición hacia el estado final.
 - Evaluar una FSM similar para `HistoryPanel` si se agrega edición/borrado de registros individuales.
 - Considerar persistir también el estado de la FSM (por si el usuario cierra la app a mitad de la animación de confirmación — caso extremadamente improbable dada la duración de 0.4s, pero documentado como hipótesis).
 
-## [2026-10-15] - Laboratorio 7: Sprint Review 2 — Vertical Slice, Persistencia y Publicación Web
+## [2026-10-22] - Laboratorio 7: Sprint Review 2 — Vertical Slice, Persistencia y Publicación Web
 
 **Autor:** July Tatiana Ariza
 
 ### Resumen
-A diferencia de otros proyectos del curso, la persistencia de datos
-(`FileAccess` + JSON en `GlobalManager`) ya se había implementado en una
-entrega anterior (ver entrada del 2026-09-11 y `ADR-004-persistencia-historial.md`),
-adelantándose al requisito de este laboratorio. Esta entrada se enfoca en
-cerrar el Vertical Slice: validar el flujo completo, refinar detalles
-visuales pendientes, y publicar la versión Web en itch.io.
+El proyecto ya persistía la evaluación y su historial (ADR-004), pero no
+tenía los sistemas que pide el Vertical Slice: minijuego, cupones y
+compras. Se construyeron adaptados al dominio de fatiga cognitiva y se
+integraron al flujo existente sin retirar nada de lo anterior:
+**Enfoque Rush** (minijuego de atención), **cupones persistentes** en
+`GlobalManager` y una **Tienda de Bienestar** con factura.
 
 ### Actividades realizadas
-- Se confirmó que `estado_simulacion` y `historial_evaluaciones` se
-  guardan y cargan correctamente mediante `_guardar_estado()` /
-  `_cargar_estado()` y `_guardar_historial()` / `_cargar_historial()` en
-  `GlobalManager`, usando `user://fatiga_estado.json` y
-  `user://fatiga_historial.json`.
-- Se recorrió el flujo completo: Menú → Evaluación (con la nueva FSM del
-  Lab 6) → Guardar → Historial → Volver, confirmando que todo sigue
-  integrado tras los cambios recientes.
-- [COMPLETAR: qué ajuste visual adicional hiciste, si alguno, al revisar
-  distribución/legibilidad/consistencia entre pantallas]
-- Exportación del proyecto con el preset Web de Godot, con las cabeceras
-  de aislamiento de origen y la depuración desactivadas.
-- Publicación como juego HTML en itch.io.
+- **Minijuego Enfoque Rush** (`src/scenes/minigame/`): caen ideas
+  (círculo amarillo), distractores (rombo rojo) y pausas activas
+  (hexágono verde). El jugador mueve la "lente de enfoque" con flechas,
+  A/D o el mouse. Meta: 200 puntos en 45 s con 3 vidas; racha x2/x3,
+  dificultad progresiva, pausa (Esc/P), cuenta regresiva y pantallas de
+  victoria/derrota. FSM de 6 estados (`FocusRushRules.TRANSICIONES`).
+  Las reglas puras viven en `focus_rush_rules.gd` para poder probarlas.
+- **Cupones persistentes** en `GlobalManager`: `SAVE_PATH =
+  "user://save_data.json"`, `save_coupons()` / `load_coupons()` con
+  `FileAccess` + `JSON`, carga en `_ready()`, guardado al obtener
+  (`EventBus.coupon_obtained`) y actualización al consumir
+  (`remove_coupon()`), `get_best_coupon(subtotal)` y `apply_coupon()`.
+  El cupón depende del desempeño: 1 estrella $2.000 (mín. $10.000),
+  2 estrellas $3.000 (mín. $15.000), 3 estrellas $5.000 (mín. $20.000).
+- **Tienda de Bienestar** (`src/scenes/shop/buy_panel.tscn`) con tres
+  planes de descanso y **factura** (`purchase_invoice.tscn`) que aplica
+  automáticamente el mejor cupón, permite no usarlo y lo consume al
+  confirmar.
+- **Pantalla de cupón** (`src/scenes/coupon/coupon_event.tscn`): tarjeta
+  animada del cupón ganado y lista "Mis cupones".
+- **Refinamiento visual**: menú reorganizado en tres secciones
+  (Evaluación / Minijuego y tienda / Aplicación); se quitaron los emoji
+  de títulos y botones porque en la versión Web se veían como cuadros
+  vacíos (la fuente por defecto no los incluye); color de fondo oscuro
+  común (`default_clear_color`); transición de fundido entre pantallas;
+  foco inicial de teclado en cada pantalla; "Cerrar aplicación" oculto
+  en Web (allí `quit()` no hace nada).
+- **Navegación**: volver al menú reinicia `navigation_history` para no
+  acumular entradas de flujos ya terminados (menú → tienda → factura →
+  menú).
+- **Exportación Web**: preset "Web" (`export_presets.cfg`), sin hilos,
+  sin cabeceras de aislamiento de origen (`ensure_cross_origin_isolation_headers=false`)
+  y exportado en modo release (sin depuración) a `build/web/index.html`.
+- **Pruebas del flujo completo**: `tools/system_flow_runner.tscn`
+  recorre el proyecto real (menú → minijuego jugado por un bot que usa
+  las mismas acciones de teclado → victoria → cupón → tienda → factura →
+  confirmación). `tools/run_system_test.sh` lo ejecuta en 4 procesos
+  distintos para validar el cierre y la reapertura.
+
+### Validación de persistencia
+| Prueba | Escritorio (Godot 4.7.1) | Web (Chromium, IndexedDB) |
+|---|---|---|
+| Ganar cupón, cerrar y reabrir: el cupón sigue disponible | PASA | PASA |
+| Consumir el mejor cupón ($5.000 sobre $25.000 → total $20.000), cerrar y reabrir: no reaparece | PASA | PASA |
+| `save_data.json` existe en la carpeta de datos del usuario (Proyecto → Abrir carpeta de datos del usuario) | PASA | n/a (IndexedDB) |
 
 ### Desafíos encontrados y soluciones
-[COMPLETAR: cualquier problema al exportar/publicar — por ejemplo,
-plantillas de exportación faltantes, el zip con carpeta anidada en vez
-de index.html en la raíz, o la necesidad de un servidor local para
-probar la build antes de subirla]
+- **JSON devuelve flotantes**: al recargar, `2000` volvía como `2000.0`,
+  así que las igualdades entre cupones y el formato `%d` fallaban. Se
+  normalizan `value` y `minimum_purchase` a `int` en `_normalizar_cupon()`.
+- **Emoji en la versión Web**: se veían como cuadros vacíos. Se
+  reemplazaron por texto (y por iconos en el Lab 8).
+- **Consumir el cupón correcto**: se identifica cada cupón con un `id`
+  único (`CUP-<tiempo>-<aleatorio>`), y `remove_coupon()` busca por id;
+  sin id, compara por contenido.
+- **Probar un minijuego de 45 s de forma repetible**: se agregó un runner
+  con un bot que pulsa `move_left`/`move_right` (`Input.action_press`), y
+  en headless se usa `--fixed-fps 60` para que la partida corra rápido.
 
 ### URL secreta de la publicación
-[COMPLETAR: pega aquí el link de itch.io después de publicar en modo Draft]
+- itch.io (draft, HTML): _pendiente de pegar tras subir_
+  `build/DetectorFatigaCognitiva-web.zip` (ver `doc/PUBLICACION_ITCH.md`).
 
 ### Estado final del Vertical Slice
-[COMPLETAR: confirma que probaste cerrar/reabrir tanto en escritorio
-como en la versión Web publicada, y que la persistencia (estado +
-historial) se mantiene en ambos casos]
+Flujo completo funcional desde `main_app.tscn`: Menú → Enfoque Rush →
+Cupón → Tienda → Factura → Confirmación, más la evaluación de fatiga y su
+historial de entregas anteriores. Persistencia validada en escritorio y
+en navegador.
+
+### Retrospectiva (Sprint 2)
+1. **Cambio técnico más importante:** separar las reglas del minijuego
+   (`FocusRushRules`) y los cupones (`GlobalManager`) de las escenas: el
+   minijuego solo emite `coupon_obtained` y las pantallas solo leen el
+   estado, así se integraron cuatro pantallas nuevas sin acoplarlas.
+2. **Problema de persistencia:** la conversión int→float de JSON; se
+   resolvió normalizando al cargar.
+3. **Mejora visual de mayor impacto:** reorganizar el menú por secciones
+   y eliminar los emoji que se rompían en Web.
+4. **Godot vs. Web:** en Web no hay `quit()`, `user://` vive en IndexedDB
+   del navegador, y sin fuentes del sistema los glifos especiales no se
+   ven. Además el renderizado por software es más lento, aunque el juego
+   usa `delta` y se comporta igual.
+5. **Para el siguiente sprint:** Theme centralizado, iconografía,
+   accesibilidad y retroalimentación al comprar.

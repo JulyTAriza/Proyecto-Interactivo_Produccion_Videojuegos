@@ -34,7 +34,7 @@ func _on_history_updated(historial: Array) -> void:
 		var registro: Dictionary = historial[i]
 		var fila: Label = Label.new()
 		fila.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		fila.text = "🗓 %s   |   Perfil: %s   |   Índice total: %d" % [
+		fila.text = "%s   |   Perfil: %s   |   Índice total: %d" % [
 			registro.get("fecha", "sin fecha"),
 			registro.get("base", "¿?"),
 			registro.get("total", 0),
