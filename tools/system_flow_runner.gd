@@ -27,11 +27,15 @@ const Kind = FocusRushRules.StimulusKind
 var app: Node
 var errores: Array[String] = []
 var args_tienda: String = "planes"
+## Segundos de pausa en cada pantalla clave para tomar capturas de evidencia
+## (0 = sin pausas). Uso: --evidencia=2
+var pausa_evidencia: float = 0.0
 
 func _ready() -> void:
 	var args: Dictionary = _args()
 	var fase: String = args.get("fase", "jugar")
 	args_tienda = args.get("tienda", "planes")
+	pausa_evidencia = float(args.get("evidencia", "0"))
 	app = MAIN_APP.instantiate()
 	add_child(app)
 	await _frames(5)
@@ -58,10 +62,14 @@ func _jugar(comprar: bool) -> void:
 		await _frames(2)
 		_check(juego.current_state == State.CUENTA_REGRESIVA, "Inicia la cuenta regresiva")
 		var frames: int = 0
+		var capturado: bool = false
 		while juego.current_state in [State.CUENTA_REGRESIVA, State.JUGANDO] and frames < 60 * 60:
 			_bot(juego)
 			await get_tree().process_frame
 			frames += 1
+			if not capturado and juego.current_state == State.JUGANDO and juego.score >= 90:
+				capturado = true
+				_log("CAPTURA juego_en_curso")
 		Input.action_release("move_left")
 		Input.action_release("move_right")
 		_log("Intento %d terminó en %s con %d puntos, %d vidas, %.1f s (frames=%d)" % [intento + 1, State.keys()[juego.current_state], juego.score, juego.lives, juego.elapsed, frames])
@@ -71,6 +79,7 @@ func _jugar(comprar: bool) -> void:
 	_check(ganado, "El bot logró ganar una partida")
 	if not ganado:
 		return
+	await _captura("victoria")
 
 	_check(GlobalManager.coupons.size() == cupones_iniciales + 1, "El cupón ganado entró a la colección")
 	_check(_cupones_en_disco() == cupones_iniciales + 1, "El cupón ganado quedó en user://save_data.json")
@@ -90,6 +99,7 @@ func _jugar(comprar: bool) -> void:
 	_presionar(juego.btn_primario)
 	await _frames(5)
 	_check(_escena_actual().name == "CouponEvent", "Se muestra la pantalla del cupón")
+	await _captura("cupon_obtenido")
 	_presionar(_buscar("BtnTienda"))
 	await _frames(5)
 	_check(_escena_actual().name == "BuyPanel", "Se abrió la tienda")
@@ -100,12 +110,14 @@ func _jugar(comprar: bool) -> void:
 	_check(GlobalManager.compra_actual.get("subtotal", 0) == 25000, "Subtotal del plan = 25.000")
 	var btn_factura: Button = _buscar("BtnFactura")
 	_check(not btn_factura.disabled, "El botón de factura se habilitó")
+	await _captura("tienda_plan_elegido")
 	_presionar(btn_factura)
 	await _frames(5)
 	var factura: Node = _escena_actual()
 	_check(factura.name == "PurchaseInvoice", "Se abrió la factura")
 	var esperado: int = 25000 - int(GlobalManager.get_best_coupon(25000).get("value", 0))
 	_check(factura.lbl_total.text == "$" + FormatUtil.pesos(esperado), "Total mostrado %s == esperado $%s" % [factura.lbl_total.text, FormatUtil.pesos(esperado)])
+	await _captura("factura_con_cupon")
 
 	# 5) Confirmar -> el cupón se consume y el archivo se actualiza
 	_presionar(factura.btn_confirmar)
@@ -115,6 +127,7 @@ func _jugar(comprar: bool) -> void:
 	_check(GlobalManager.purchases.size() > 0, "La compra quedó registrada")
 	if "pop_up_confirm" in factura:
 		_check(factura.pop_up_confirm.visible, "Se muestra PurchaseSuccessPopup tras confirmar")
+		await _captura("popup_compra")
 		_presionar(factura.btn_continuar)
 		await _frames(5)
 		_check(_escena_actual().name == "MenuPanel", "Continuar regresa al menú principal")
@@ -129,6 +142,7 @@ func _comprar_kit(cupones_iniciales: int) -> void:
 	var panel: Node = _escena_actual()
 	_check(panel.name == "BuyPanelInteractive", "Se abrió el armador de kit")
 	_check(panel.tarjetas.size() == GlobalManager.wellness_items.size(), "Se generó una tarjeta por recurso del catálogo (%d)" % panel.tarjetas.size())
+	await _captura("kit_vacio")
 	for id in ["jugo", "frutos_secos", "mindfulness"]:
 		_presionar(panel.tarjetas[id])
 		await _frames(3)
@@ -146,10 +160,13 @@ func _comprar_kit(cupones_iniciales: int) -> void:
 	_check(GlobalManager.kit_selection["snack"] == "", "Quitar vacía la sección snack")
 	_presionar(panel.tarjetas["frutos_secos"])
 	await _frames(3)
+	await _frames(30)
+	await _captura("kit_completo")
 	_presionar(panel.btn_factura)
 	await _frames(5)
 	var factura: Node = _escena_actual()
 	_check(factura.name == "PurchaseInvoiceInteractive", "Se abrió la factura interactiva")
+	await _captura("factura_kit")
 	_check(factura.items_factura.size() == 3, "La factura tiene 3 líneas generadas desde recursos")
 	var cupon: Dictionary = GlobalManager.get_best_coupon(esperado)
 	var total: int = esperado - int(cupon.get("value", 0))
@@ -157,6 +174,7 @@ func _comprar_kit(cupones_iniciales: int) -> void:
 	_presionar(factura.btn_confirmar)
 	await _frames(5)
 	_check(factura.pop_up_confirm.visible, "PurchaseSuccessPopup visible tras confirmar el kit")
+	await _captura("popup_kit")
 	_check(GlobalManager.coupons.size() == cupones_iniciales + 1 - (0 if cupon.is_empty() else 1), "El cupón aplicado al kit se consumió")
 	_check(GlobalManager.calculate_kit_subtotal(GlobalManager.kit_selection) == 0, "El kit se vació después de comprar")
 	_log("RESULTADO_CUPONES=%d" % GlobalManager.coupons.size())
@@ -193,6 +211,13 @@ func _bot(juego: Node) -> void:
 		Input.action_press("move_right")
 
 # ---------------------------------------------------------------------------
+## Anuncia una pantalla para captura y espera (solo con --evidencia).
+func _captura(nombre: String) -> void:
+	if pausa_evidencia <= 0.0:
+		return
+	_log("CAPTURA " + nombre)
+	await get_tree().create_timer(pausa_evidencia).timeout
+
 func _escena_actual() -> Node:
 	return app.current_scene
 
