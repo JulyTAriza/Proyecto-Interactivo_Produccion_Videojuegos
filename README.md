@@ -34,13 +34,27 @@ tools/               Prueba de sistema, sesión de depuración, contraste WCAG, 
 doc/                 ADR-001..005, ACCESIBILIDAD.md, PUBLICACION_ITCH.md, qa/ (issues y evidencias)
 ```
 
-## 📚 Entregables por laboratorio
-| Lab | Rama / etiqueta | Documentos |
-|---|---|---|
-| 7 Vertical Slice + Web | `lab-7` | DEVLOG, `doc/PUBLICACION_ITCH.md` |
-| 8 UI/UX y accesibilidad | `lab-8` · `lab-8-final` | USER_FEEDBACK.md, BACKLOG.md, `doc/ACCESIBILIDAD.md` |
-| 9 Resources y UI dinámica | `lab-9` · `lab-9-final` | ADR-006.md |
-| 10 Depuración y QA | `lab-10` · `lab-10-final` · `v0.9.0-beta` | registro_depuracion.md, TEST_REPORT.md, `doc/qa/ISSUES.md` |
+## 📚 Laboratorios publicados
+**Repositorio:** https://github.com/JulyTAriza/Proyecto-Interactivo_Produccion_Videojuegos
+
+Cada laboratorio está en su propia rama y tiene una etiqueta con su versión final.
+
+| Laboratorio | Rama | Etiqueta | Documentos principales |
+|---|---|---|---|
+| 2 · Escenas, nodos y co-localización | [`lab-2`](https://github.com/JulyTAriza/Proyecto-Interactivo_Produccion_Videojuegos/tree/lab-2) | [`lab-2-v1.0`](https://github.com/JulyTAriza/Proyecto-Interactivo_Produccion_Videojuegos/releases/tag/lab-2-v1.0) | README.md, ADR-001 |
+| 3-4 · Event Bus, GlobalManager y ButtonNav | [`main` (Lab 4)](https://github.com/JulyTAriza/Proyecto-Interactivo_Produccion_Videojuegos/tree/lab-4-final) | [`lab-4-final`](https://github.com/JulyTAriza/Proyecto-Interactivo_Produccion_Videojuegos/releases/tag/lab-4-final) | ADR-002, ADR-003, ADR-004 |
+| 5-6 · Entrada del usuario, FSM y animaciones | [`lab-6`](https://github.com/JulyTAriza/Proyecto-Interactivo_Produccion_Videojuegos/tree/lab-6) | [`lab-6-final`](https://github.com/JulyTAriza/Proyecto-Interactivo_Produccion_Videojuegos/releases/tag/lab-6-final) | ADR-005, `doc/diagrams/fsm-evaluacion.md` |
+| 7 · Vertical Slice, persistencia y Web | [`lab-7`](https://github.com/JulyTAriza/Proyecto-Interactivo_Produccion_Videojuegos/tree/lab-7) | [`lab-7-final`](https://github.com/JulyTAriza/Proyecto-Interactivo_Produccion_Videojuegos/releases/tag/lab-7-final) | DEVLOG.md, `doc/PUBLICACION_ITCH.md` |
+| 8 · UI/UX y accesibilidad | [`lab-8`](https://github.com/JulyTAriza/Proyecto-Interactivo_Produccion_Videojuegos/tree/lab-8) | [`lab-8-final`](https://github.com/JulyTAriza/Proyecto-Interactivo_Produccion_Videojuegos/releases/tag/lab-8-final) | USER_FEEDBACK.md, BACKLOG.md, `doc/ACCESIBILIDAD.md` |
+| 9 · Resources y UI dinámica | [`lab-9`](https://github.com/JulyTAriza/Proyecto-Interactivo_Produccion_Videojuegos/tree/lab-9) | [`lab-9-final`](https://github.com/JulyTAriza/Proyecto-Interactivo_Produccion_Videojuegos/releases/tag/lab-9-final) | ADR-006.md |
+| 10 · Depuración, pruebas y QA | [`lab-10`](https://github.com/JulyTAriza/Proyecto-Interactivo_Produccion_Videojuegos/tree/lab-10) | [`lab-10-final`](https://github.com/JulyTAriza/Proyecto-Interactivo_Produccion_Videojuegos/releases/tag/lab-10-final) · [`v0.9.0-beta`](https://github.com/JulyTAriza/Proyecto-Interactivo_Produccion_Videojuegos/releases/tag/v0.9.0-beta) | registro_depuracion.md, TEST_REPORT.md, `doc/qa/ISSUES.md` |
+
+Para descargar un laboratorio concreto:
+```bash
+git clone https://github.com/JulyTAriza/Proyecto-Interactivo_Produccion_Videojuegos.git
+cd Proyecto-Interactivo_Produccion_Videojuegos
+git switch lab-9        # o lab-6, lab-7, lab-8, lab-10
+```
 
 ## 🧪 Pruebas
 ```bash
